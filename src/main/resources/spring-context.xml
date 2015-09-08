@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-4.1.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+	http://www.springframework.org/schema/task 
+	http://www.springframework.org/schema/task/spring-task-4.1.xsd
+	http://www.springframework.org/schema/data/mongo
+	http://www.springframework.org/schema/data/mongo/spring-mongo-1.8.xsd
+">
+
+	<context:component-scan base-package="com.noisyle.crowbar.service" />
+	<context:component-scan base-package="com.noisyle.crowbar.repository" />
+
+	<!-- 加载属性文件 -->
+	<context:property-placeholder location="classpath*:/spring-context.properties"
+		system-properties-mode="OVERRIDE" ignore-resource-not-found="true" ignore-unresolvable="true" />
+	<!-- 加载属性文件 -->
+
+	<!-- mongodb配置 -->
+	<mongo:mongo host="${mongo.host}" port="${mongo.port}" />
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg ref="mongo" />
+		<constructor-arg name="databaseName" value="${mongo.databaseName}" />
+	</bean>
+	<!-- mongodb配置 -->
+
+	<!-- 配置国际化资源文件路径 -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<!-- 定义消息资源文件的相对路径 -->
+			<list>
+				<value>i18n/message</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 基于Cookie的本地化解析器 -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="cookieMaxAge" value="604800" />
+		<property name="defaultLocale" value="zh_CN" />
+		<property name="cookieName" value="Language" />
+	</bean>
+	<!-- 基于Session的本地化解析器 -->
+	<!--<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" /> -->
+
+	<!-- 基于spring task的自动任务守护线程 -->
+	<bean id="daemonTask" class="com.noisyle.crowbar.core.task.DaemonTask" />
+	<task:scheduled-tasks>
+		<!-- 1分钟运行一次 -->
+		<task:scheduled ref="daemonTask" method="run" cron="0 * * * * ?" />
+	</task:scheduled-tasks>
+
+	<bean id="springContextHolder" class="com.noisyle.crowbar.core.util.SpringContextHolder" />
+</beans>
