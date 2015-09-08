@@ -1,9 +1,5 @@
 
 +function($){
-	//创建crowbar对象
-	$.crowbar = {};
-	$.crowbar.ctx = info.contextPath;
-	
 	//修改dataTables插件默认值
 	!$.fn.dataTable || $.extend($.fn.dataTable.defaults, {
 		scrollY: 300,

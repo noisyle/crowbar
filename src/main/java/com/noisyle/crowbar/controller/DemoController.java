@@ -19,6 +19,7 @@ public class DemoController extends BaseController {
 	@RequestMapping(value="/init", produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String init() {
+		userRepository.removeAll();
 		User user = new User();
 		user.setLoginname("admin1");
 		user.setUsername("管理员1");

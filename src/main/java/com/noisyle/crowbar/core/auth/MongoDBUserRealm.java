@@ -1,5 +1,6 @@
 package com.noisyle.crowbar.core.auth;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
@@ -39,6 +40,7 @@ public class MongoDBUserRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
         User user = userRepository.getUserByLoginName(token.getUsername());
         if(user != null) {
+        	SecurityUtils.getSubject().getSession().setAttribute("user", user);
             return new SimpleAuthenticationInfo(user.getId(), user.getPassword(), getName());
         } else {
             return null;

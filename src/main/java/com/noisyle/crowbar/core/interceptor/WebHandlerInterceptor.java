@@ -28,6 +28,8 @@ public class WebHandlerInterceptor implements HandlerInterceptor {
 			return true;
 		}
 		
+		request.setAttribute("ctx", contextPath);
+		
 		logger.debug("请求url:{}\nmethod:{}\nparams:{}\nrefer:{}", url, request.getMethod(), request.getParameterMap(), refer);
 		return true;
 	}
