@@ -6,6 +6,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.joda.time.LocalDate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +43,12 @@ public class AdminController extends BaseController {
 	public String main(HttpServletRequest request) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		request.setAttribute("user", user);
+		request.setAttribute("today", LocalDate.now().toString("yyyy年MM月dd日"));
 		return "admin/main";
+	}
+	
+	@RequestMapping(value="/user/list", method=RequestMethod.GET)
+	public String userList(HttpServletRequest request) {
+		return "admin/user/list";
 	}
 }

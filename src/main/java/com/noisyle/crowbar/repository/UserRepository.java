@@ -20,7 +20,4 @@ public class UserRepository extends BaseMongoRepository<User, String> {
 		return user;
 	}
 	
-	public void removeAll() {
-		mongoTemplate.dropCollection(User.class);
-	}
 }
