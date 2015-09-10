@@ -29,6 +29,7 @@ body {
     position: fixed;
     top: 51px;
     bottom: 0;
+    width: 200px;
     left: 0;
     z-index: 1000;
     display: block;
@@ -58,6 +59,7 @@ body {
 }
 
 .frame {
+  margin: 0 0 0 200px;
   padding: 0;
   overflow: hidden;
 }

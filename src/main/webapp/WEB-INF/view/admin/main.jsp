@@ -34,7 +34,7 @@
               <li><a href="#">个人信息</a></li>
               <li><a href="#">修改密码</a></li>
               <li role="separator" class="divider"></li>
-              <li><a href="#">退出</a></li>
+              <li><a href="${ctx}/admin/logout">退出</a></li>
             </ul>
             </li>
           </ul>
@@ -44,13 +44,13 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div id="menu" class="col-sm-3 col-md-2 sidebar">
+        <div id="menu" class="sidebar">
           <ul class="nav nav-sidebar">
             <li><a href="${ctx}/admin/user/list">用户</a></li>
             <li><a href="#">栏目</a></li>
           </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 frame">
+        <div class="frame">
 			<iframe id="mainFrame"></iframe>
         </div>
       </div>
@@ -65,19 +65,5 @@ $.crowbar = {
 };
 </script>
 <script src="${ctx}/static/utils.js"></script>
-<script>
-$(function(){
-	$("#menu").on("click", "a", function(e){
-		$("#mainFrame").attr("src", $(this).attr("href"));
-		return false;
-	});
-	resizeFrame();
-	$(window).on("resize", function(e){
-		resizeFrame();
-	});
-});
-function resizeFrame(){
-	$(".frame").css("height", $(window).height() - 51);
-}
-</script>
+<script src="${ctx}/static/site/js/admin.js"></script>
 </html>

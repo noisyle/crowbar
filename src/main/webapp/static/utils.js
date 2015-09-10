@@ -4,10 +4,6 @@
 	!$.fn.dataTable || $.extend($.fn.dataTable.defaults, {
 		scrollY: 300,
 		scrollCollapse: "true",
-		dom:
-			"<'row'<'col-sm-6'><'col-sm-6'f>>" +
-			"<'row'<'col-sm-12'tr>>" +
-			"<'row'<'col-sm-3'l><'col-sm-3'i><'col-sm-6'p>>",
 		renderer: 'bootstrap',
 		language: {
 			"lengthMenu" : "每页 _MENU_ 条记录",

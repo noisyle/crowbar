@@ -11,11 +11,12 @@
 <link href="${ctx}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="${ctx}/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 <link href="${ctx}/static/datatables/css/dataTables.bootstrap.css" rel="stylesheet">
-<link href="${ctx}/static/site/css/admin.css" rel="stylesheet">
+<link href="${ctx}/static/site/css/common.css" rel="stylesheet">
 </head>
 
 <body>
 
+<div class="container-fluid">
     <section class="content-header">
       <h1>
         用户管理
@@ -35,8 +36,8 @@
               <thead>
                 <tr>
                   <th>id</th>
+                  <th>登录名称</th>
                   <th>用户名称</th>
-                  <th>登录名</th>
                   <th></th>
                 </tr>
               </thead>
@@ -46,6 +47,7 @@
       </div>
 
     </section>
+</div>
 
 </body>
 <script src="${ctx}/static/jquery/jquery-1.11.2.min.js"></script>
@@ -62,14 +64,14 @@ $.crowbar = {
 $(function() {
 	$('#example1').DataTable({
 		ajax : {
-			url: '${ctx}/admin/user/list',
+			url: '${ctx}/admin/users',
 			data: {}
 		},
 		serverSide: true,
 		columns : [
 			{data : "id"},
-			{data : "name"},
-			{data : "loginName"},
+			{data : "loginname"},
+			{data : "username"},
 			{data : null}
 		],
         columnDefs: [{
