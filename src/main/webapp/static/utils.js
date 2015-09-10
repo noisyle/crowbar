@@ -1,4 +1,3 @@
-
 +function($){
 	//修改dataTables插件默认值
 	!$.fn.dataTable || $.extend($.fn.dataTable.defaults, {
@@ -13,8 +12,8 @@
 			"infoFiltered" : "(筛选自 _MAX_ 条记录)",
 			"search" : "筛选: _INPUT_",
 			"paginate" : {
-				"previous" : "上一页",
-				"next" : "下一页"
+				"previous" : "上页",
+				"next" : "下页"
 			}
 		}
 	});

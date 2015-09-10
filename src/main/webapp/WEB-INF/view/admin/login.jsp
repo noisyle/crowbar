@@ -78,11 +78,6 @@ body {
   
 </body>
 <script src="${ctx}/static/jquery/jquery-1.11.2.min.js"></script>
-<script>
-$.crowbar = {
-	ctx: '${ctx}'
-};
-</script>
 <script src="${ctx}/static/utils.js"></script>
 <script>
 $(function(){

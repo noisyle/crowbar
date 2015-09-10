@@ -1,7 +1,21 @@
 $(function() {
-
-    $('#side-menu').metisMenu();
-
+	var $menu = $("#side-menu");
+	$menu.metisMenu();
+    $menu.on("click", 'a', function(){
+		var url = $(this).attr("href");
+		if(url!='#') {
+			$.get(url, function(data) {
+				$('#page-wrapper').html(data);
+			});
+		}
+		$menu.find(".active").removeClass("active");
+		$menu.find(".in").removeClass("in");
+		var element = $(this).addClass("active").parent().parent().addClass('in').parent();
+	    if (element.is('li')) {
+	    	element.addClass('active');
+	    }
+		return false;
+    });
 });
 
 //Loads the correct sidebar on window load,
@@ -26,11 +40,4 @@ $(function() {
         }
     });
 
-    var url = window.location;
-    var element = $('ul.nav a').filter(function() {
-        return this.href == url || url.href.indexOf(this.href) == 0;
-    }).addClass('active').parent().parent().addClass('in').parent();
-    if (element.is('li')) {
-        element.addClass('active');
-    }
 });
