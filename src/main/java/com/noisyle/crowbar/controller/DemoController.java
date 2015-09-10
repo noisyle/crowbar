@@ -20,11 +20,24 @@ public class DemoController extends BaseController {
 	@ResponseBody
 	public String init() {
 		mongoTemplate.dropCollection(User.class);
+		String pass = CryptoUtils.md5("123456");
 		User user = new User();
 		user.setLoginname("admin1");
 		user.setUsername("管理员1");
-		user.setPassword(CryptoUtils.md5("123456"));
+		user.setPassword(pass);
 		mongoTemplate.save(user);
+		user = new User();
+		user.setLoginname("admin2");
+		user.setUsername("管理员2");
+		user.setPassword(pass);
+		mongoTemplate.save(user);
+		for(int i = 0;i<100;i++){
+			user = new User();
+			user.setLoginname("user"+i);
+			user.setUsername("用户"+i);
+			user.setPassword(pass);
+			mongoTemplate.save(user);
+		}
 		return "初始化成功";
 	}
 	
