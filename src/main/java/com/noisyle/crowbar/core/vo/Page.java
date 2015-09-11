@@ -6,34 +6,33 @@ import com.noisyle.crowbar.core.base.BaseModel;
 
 public class Page<T extends BaseModel> {
 	
-	private List<T> rows;
-	private Long total;
-	private Integer number;
-	private Integer size = 10;
+	private List<T> data;
+	private long recordsTotal;
+	private long recordsFiltered;
+	private int draw;
 	
-	public List<T> getRows() {
-		return rows;
+	public List<T> getData() {
+		return data;
 	}
-	public void setRows(List<T> rows) {
-		this.rows = rows;
+	public void setData(List<T> data) {
+		this.data = data;
 	}
-	public Long getTotal() {
-		return total;
+	public long getRecordsTotal() {
+		return recordsTotal;
 	}
-	public void setTotal(Long total) {
-		this.total = total;
+	public void setRecordsTotal(long recordsTotal) {
+		this.recordsTotal = recordsTotal;
 	}
-	public Integer getNumber() {
-		return number;
+	public long getRecordsFiltered() {
+		return recordsFiltered;
 	}
-	public void setNumber(Integer number) {
-		this.number = number;
+	public void setRecordsFiltered(long recordsFiltered) {
+		this.recordsFiltered = recordsFiltered;
 	}
-	public Integer getSize() {
-		return size;
+	public int getDraw() {
+		return draw;
 	}
-	public void setSize(Integer size) {
-		this.size = size;
+	public void setDraw(int draw) {
+		this.draw = draw;
 	}
-
 }

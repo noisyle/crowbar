@@ -15,14 +15,6 @@
 				"previous" : "上页",
 				"next" : "下页"
 			}
-		},
-		ajax : {
-			url: '${ctx}/admin/users',
-			contentType: "application/json",
-		    type: "GET",
-		    data: function (d) {
-		      return {pageParam: JSON.stringify(d)};
-		    }
 		}
 	});
 }(jQuery);

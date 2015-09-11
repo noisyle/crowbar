@@ -1,19 +1,27 @@
 package com.noisyle.crowbar.core.vo;
 
 public class PageParam {
-	private Integer draw = 1;
-	private Integer length = 10;
+	private int draw = 1;
+	private int start = 0;
+	private int length = 10;
 	
-	public Integer getDraw() {
+	public int getDraw() {
 		return draw;
 	}
-	public void setDraw(Integer draw) {
+	public void setDraw(int draw) {
 		this.draw = draw;
 	}
-	public Integer getLength() {
+	public int getStart() {
+		return start;
+	}
+	public void setStart(int start) {
+		this.start = start;
+	}
+	public int getLength() {
 		return length;
 	}
-	public void setLength(Integer length) {
+	public void setLength(int length) {
 		this.length = length;
 	}
+	
 }

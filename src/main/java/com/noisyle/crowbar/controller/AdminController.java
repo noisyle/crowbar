@@ -1,8 +1,5 @@
 package com.noisyle.crowbar.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
@@ -70,14 +67,9 @@ public class AdminController extends BaseController {
 	}
 	
 	@RequestMapping(value="/users", method=RequestMethod.GET)
-	public @ResponseBody Object list(@ModelAttribute("pageParam") PageParam pageParam) {
-		logger.debug("============ draw: "+pageParam.getDraw());
-		Map<String, Object> map = new HashMap<>();
+	@ResponseBody
+	public Object list(PageParam pageParam) {
 		Page<User> page = userRepository.getPage(pageParam);
-		map.put("data", page.getRows());
-		map.put("recordsTotal", page.getTotal());
-		map.put("recordsFiltered", page.getTotal());
-		map.put("draw", page.getNumber());
-		return map;
+		return page;
 	}
 }

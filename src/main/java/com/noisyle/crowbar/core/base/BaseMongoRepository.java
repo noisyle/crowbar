@@ -74,16 +74,16 @@ public class BaseMongoRepository<T extends BaseModel, ID extends Serializable> {
 	}
 	
 	public Page<T> getPage(PageParam pageParam, Query query) {
-		Long total = mongoTemplate.count(query, clazz);
-		int skip = (pageParam.getDraw() - 1) * pageParam.getLength();
+		long total = mongoTemplate.count(query, clazz);
+		int skip = pageParam.getStart();
 		int limit = pageParam.getLength();
 		query.skip(skip).limit(limit);
-		List<T> rows = mongoTemplate.find(query, clazz);
+		List<T> data = mongoTemplate.find(query, clazz);
 		Page<T> Page = new Page<T>();
-		Page.setRows(rows);
-		Page.setTotal(total);
-		Page.setNumber(pageParam.getDraw());
-		Page.setSize(pageParam.getLength());
+		Page.setData(data);
+		Page.setRecordsTotal(total);
+		Page.setRecordsFiltered(total);
+		Page.setDraw(pageParam.getDraw());
 		return Page;
 	}
 	
