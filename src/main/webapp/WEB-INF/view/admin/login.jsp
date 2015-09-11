@@ -36,12 +36,12 @@
                         <form role="form">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="用户名" name="loginname" type="text" autofocus>
+                                    <input class="form-control" placeholder="用户名" name="loginname" type="text" value="admin1" autofocus />
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="密码" name="password" type="password" >
+                                    <input class="form-control" placeholder="密码" name="password" type="password" value="123456" />
                                 </div>
-                                <div class="alert alert-danger" id="msg" style="display:none;"></div>
+                                <div class="alert alert-danger" id="msg" style="display:none; padding:5px 15px;"></div>
                                 <div class="checkbox">
                                     <label>
                                         <input name="remember" type="checkbox" value="Remember Me">记住密码
@@ -62,7 +62,14 @@
 	<script src="${ctx}/static/utils.js"></script>
 <script>
 $(function(){
-	$(".btn-primary").click(function(e){
+	$('.btn-primary').on('click', login);
+	$('form').on('keyup', 'input', function(e){
+		if(e.which=='13'){
+			login(e);
+		}
+	});
+	
+	function login(e){
 		var data = $('form').serializeObject();
 		data.password = $.md5(data.password).toUpperCase();
 		$.ajax({
@@ -73,11 +80,11 @@ $(function(){
 				if(r.status=='SUCCESS'){
 					window.location.href="${ctx}/admin";
 				}else{
-					$("#msg").text("用户名或密码错误！").show();
+					$("#msg").text(r.message).show();
 				}
 			}
 		});
-	});
+	}
 });
 </script>
 </body>

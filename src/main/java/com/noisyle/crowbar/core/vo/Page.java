@@ -9,7 +9,7 @@ public class Page<T extends BaseModel> {
 	private List<T> rows;
 	private Long total;
 	private Integer number;
-	private Integer size = 20;
+	private Integer size = 10;
 	
 	public List<T> getRows() {
 		return rows;

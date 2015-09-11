@@ -1,7 +1,6 @@
 package com.noisyle.crowbar.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,11 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.noisyle.crowbar.core.base.BaseController;
 import com.noisyle.crowbar.core.exception.GeneralException;
+import com.noisyle.crowbar.core.vo.Page;
+import com.noisyle.crowbar.core.vo.PageParam;
 import com.noisyle.crowbar.core.vo.ResponseData;
 import com.noisyle.crowbar.model.User;
 import com.noisyle.crowbar.repository.UserRepository;
@@ -60,7 +60,7 @@ public class AdminController extends BaseController {
 	public String main(HttpServletRequest request) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		request.setAttribute("user", user);
-		request.setAttribute("today", LocalDate.now().toString("yyyy年MM月dd日"));
+		request.setAttribute("today", LocalDate.now().toString());
 		return "admin/main";
 	}
 	
@@ -70,13 +70,14 @@ public class AdminController extends BaseController {
 	}
 	
 	@RequestMapping(value="/users", method=RequestMethod.GET)
-	public @ResponseBody Object list(@RequestParam Map<String, String> params) {
+	public @ResponseBody Object list(@ModelAttribute("pageParam") PageParam pageParam) {
+		logger.debug("============ draw: "+pageParam.getDraw());
 		Map<String, Object> map = new HashMap<>();
-		List<User> list = userRepository.findAll();
-		map.put("data", list);
-		map.put("recordsTotal", list.size());
-		map.put("recordsFiltered", list.size());
-		map.put("draw", 0);
+		Page<User> page = userRepository.getPage(pageParam);
+		map.put("data", page.getRows());
+		map.put("recordsTotal", page.getTotal());
+		map.put("recordsFiltered", page.getTotal());
+		map.put("draw", page.getNumber());
 		return map;
 	}
 }
