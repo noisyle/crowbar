@@ -1,5 +1,6 @@
 package com.noisyle.crowbar.controller;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Controller;
@@ -25,17 +26,26 @@ public class DemoController extends BaseController {
 		user.setLoginname("admin1");
 		user.setUsername("管理员1");
 		user.setPassword(pass);
+		user.setPhone("13"+RandomStringUtils.randomNumeric(11));
+		user.setEmail(user.getLoginname()+"@crowbar.com");
+		user.setRole("管理员");
 		mongoTemplate.save(user);
 		user = new User();
 		user.setLoginname("admin2");
 		user.setUsername("管理员2");
 		user.setPassword(pass);
+		user.setPhone("13"+RandomStringUtils.randomNumeric(11));
+		user.setEmail(user.getLoginname()+"@crowbar.com");
+		user.setRole("管理员");
 		mongoTemplate.save(user);
 		for(int i = 0;i<100;i++){
 			user = new User();
 			user.setLoginname("user"+i);
 			user.setUsername("用户"+i);
 			user.setPassword(pass);
+			user.setPhone("13"+RandomStringUtils.randomNumeric(11));
+			user.setEmail(user.getLoginname()+"@crowbar.com");
+			user.setRole("用户");
 			mongoTemplate.save(user);
 		}
 		return "初始化成功";

@@ -18,9 +18,11 @@
 		            <table id="table" class="table table-hover table-striped table-bordered table-condensed" cellspacing="0" width="100%">
 		              <thead>
 		                <tr>
-		                  <th>id</th>
 		                  <th>登录名称</th>
 		                  <th>用户名称</th>
+		                  <th>角色</th>
+		                  <th>联系电话</th>
+		                  <th>电子邮箱</th>
 		                  <th></th>
 		                </tr>
 		              </thead>
@@ -42,9 +44,11 @@ $(function() {
 		},
 		serverSide: true,
 		columns : [
-			{data : "id"},
 			{data : "loginname"},
 			{data : "username"},
+			{data : "role"},
+			{data : "phone"},
+			{data : "email"},
 			{data : null}
 		],
         columnDefs: [{

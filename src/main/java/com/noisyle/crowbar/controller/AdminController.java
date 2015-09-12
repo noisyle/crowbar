@@ -19,7 +19,6 @@ import com.noisyle.crowbar.core.base.BaseController;
 import com.noisyle.crowbar.core.exception.GeneralException;
 import com.noisyle.crowbar.core.pagination.Page;
 import com.noisyle.crowbar.core.pagination.PageParam;
-import com.noisyle.crowbar.core.util.JSONUtils;
 import com.noisyle.crowbar.core.vo.ResponseData;
 import com.noisyle.crowbar.model.User;
 import com.noisyle.crowbar.repository.UserRepository;
@@ -71,7 +70,6 @@ public class AdminController extends BaseController {
 	@RequestMapping(value="/user", method=RequestMethod.POST)
 	@ResponseBody
 	public Object list(@RequestBody PageParam pageParam) {
-		logger.debug("===== pageParam : "+ JSONUtils.toJson(pageParam));
 		Page<User> page = userRepository.getPage(pageParam);
 		return page;
 	}

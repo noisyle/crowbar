@@ -1,10 +1,12 @@
 +function($){
 	//修改dataTables插件默认值
 	!$.fn.dataTable || $.extend($.fn.dataTable.defaults, {
+		processing: true,
 		scrollY: 300,
 		scrollCollapse: "true",
 		renderer: 'bootstrap',
 		language: {
+			"processing" : "正在查询...",
 			"lengthMenu" : "每页 _MENU_ 条记录",
 			"zeroRecords" : "没有找到记录",
 			"info" : "第 _PAGE_ 页 ( 共 _PAGES_ 页 )",

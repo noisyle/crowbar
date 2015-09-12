@@ -1,11 +1,13 @@
 package com.noisyle.crowbar.core.base;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -70,11 +72,35 @@ public class BaseMongoRepository<T extends BaseModel, ID extends Serializable> {
 	}
 
 	public Page<T> getPage(PageParam pageParam) {
-		Query query = new Query(); // TODO Set query parameters
+		Query query = new Query();
+		// 处理过滤查询条件
+		if(pageParam.getSearch().getValue()!=null && !"".equals(pageParam.getSearch().getValue().trim())){
+			List<Criteria> criterias = new LinkedList<Criteria>();
+			for(int i=0;i<pageParam.getColumns().length;i++){
+				if(pageParam.getColumns()[i].getData()!=null){
+					criterias.add(Criteria.where(pageParam.getColumns()[i].getData())
+						.regex(pageParam.getSearch().getValue()));
+				}
+			}
+			query.addCriteria(new Criteria().orOperator(criterias.toArray(new Criteria[criterias.size()])));
+		}
+		
+		// 处理排序
+		if(pageParam.getOrder()!=null && pageParam.getOrder().length>0){
+			Sort.Order[] orders = new Sort.Order[pageParam.getOrder().length];
+			for(int i=0;i<pageParam.getOrder().length;i++){
+				orders[i] = new Sort.Order(
+					Sort.Direction.fromString(pageParam.getOrder()[i].getDir()),
+					pageParam.getColumns()[pageParam.getOrder()[i].getColumn()].getData()
+				);
+			}
+			query.with(new Sort(orders));
+		}
 		return getPage(pageParam, query);
 	}
 	
 	public Page<T> getPage(PageParam pageParam, Query query) {
+		// 进行分页查询
 		long total = mongoTemplate.count(query, clazz);
 		int skip = pageParam.getStart();
 		int limit = pageParam.getLength();
