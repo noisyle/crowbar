@@ -33,7 +33,7 @@
 	</div><!-- /.row -->
 </div><!-- /.container-fluid -->
 
-<script src="${ctx}/static/datatables/js/jquery.dataTables.js"></script>
+<script src="${ctx}/static/datatables/js/jquery.dataTables.min.js"></script>
 <script src="${ctx}/static/datatables/js/dataTables.bootstrap.js"></script>
 <script src="${ctx}/static/utils.js"></script>
 <script>
