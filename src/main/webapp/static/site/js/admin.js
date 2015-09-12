@@ -4,9 +4,7 @@ $(function() {
     $menu.on("click", 'a', function(){
 		var url = $(this).attr("href");
 		if(url!='#') {
-			$.get(url, function(data) {
-				$('#page-wrapper').html(data);
-			});
+			$("#page-wrapper>iframe").attr("src", url);
 		}
 		$menu.find(".active").removeClass("active");
 		$menu.find(".in").removeClass("in");
