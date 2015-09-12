@@ -38,7 +38,7 @@
 $(function() {
 	$('#table').DataTable({
 		ajax : {
-			url: '${ctx}/admin/users'
+			url: '${ctx}/admin/user'
 		},
 		serverSide: true,
 		columns : [

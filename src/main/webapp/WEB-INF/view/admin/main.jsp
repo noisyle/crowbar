@@ -150,13 +150,13 @@
                     </ul>
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="${ctx}/admin/user/list"><i class="fa fa-users fa-fw"></i> 用户管理</a>
+                            <a href="${ctx}/admin/users"><i class="fa fa-users fa-fw"></i> 用户管理</a>
                         </li>
                         <li>
-                            <a href="${ctx}/admin/user/list"><i class="fa fa-th-list fa-fw"></i> 栏目管理</a>
+                            <a href="${ctx}/admin/users"><i class="fa fa-th-list fa-fw"></i> 栏目管理</a>
                         </li>
                         <li>
-                            <a href="${ctx}/admin/user/list"><i class="fa fa-file-text fa-fw"></i> 内容管理</a>
+                            <a href="${ctx}/admin/users"><i class="fa fa-file-text fa-fw"></i> 内容管理</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>

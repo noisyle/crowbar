@@ -10,14 +10,16 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.noisyle.crowbar.core.base.BaseController;
 import com.noisyle.crowbar.core.exception.GeneralException;
-import com.noisyle.crowbar.core.vo.Page;
-import com.noisyle.crowbar.core.vo.PageParam;
+import com.noisyle.crowbar.core.pagination.Page;
+import com.noisyle.crowbar.core.pagination.PageParam;
+import com.noisyle.crowbar.core.util.JSONUtils;
 import com.noisyle.crowbar.core.vo.ResponseData;
 import com.noisyle.crowbar.model.User;
 import com.noisyle.crowbar.repository.UserRepository;
@@ -61,14 +63,15 @@ public class AdminController extends BaseController {
 		return "admin/main";
 	}
 	
-	@RequestMapping(value="/user/list", method=RequestMethod.GET)
+	@RequestMapping(value="/users", method=RequestMethod.GET)
 	public String userList(HttpServletRequest request) {
 		return "admin/user/list";
 	}
 	
-	@RequestMapping(value="/users", method=RequestMethod.GET)
+	@RequestMapping(value="/user", method=RequestMethod.POST)
 	@ResponseBody
-	public Object list(PageParam pageParam) {
+	public Object list(@RequestBody PageParam pageParam) {
+		logger.debug("===== pageParam : "+ JSONUtils.toJson(pageParam));
 		Page<User> page = userRepository.getPage(pageParam);
 		return page;
 	}

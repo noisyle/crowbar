@@ -1,4 +1,4 @@
-package com.noisyle.crowbar.core.vo;
+package com.noisyle.crowbar.core.pagination;
 
 import java.util.List;
 

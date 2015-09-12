@@ -15,6 +15,11 @@
 				"previous" : "上页",
 				"next" : "下页"
 			}
+		},
+		ajax : {
+			contentType: "application/json",
+			type: "POST",
+			data: function(d) {return JSON.stringify(d)}
 		}
 	});
 }(jQuery);

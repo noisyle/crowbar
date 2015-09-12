@@ -10,9 +10,9 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
+import com.noisyle.crowbar.core.pagination.Page;
+import com.noisyle.crowbar.core.pagination.PageParam;
 import com.noisyle.crowbar.core.util.ReflectionUtils;
-import com.noisyle.crowbar.core.vo.Page;
-import com.noisyle.crowbar.core.vo.PageParam;
 
 public class BaseMongoRepository<T extends BaseModel, ID extends Serializable> {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
@@ -70,7 +70,8 @@ public class BaseMongoRepository<T extends BaseModel, ID extends Serializable> {
 	}
 
 	public Page<T> getPage(PageParam pageParam) {
-		return getPage(pageParam, new Query());
+		Query query = new Query(); // TODO Set query parameters
+		return getPage(pageParam, query);
 	}
 	
 	public Page<T> getPage(PageParam pageParam, Query query) {
