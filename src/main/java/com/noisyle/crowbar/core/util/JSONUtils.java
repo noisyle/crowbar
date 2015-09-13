@@ -8,7 +8,7 @@ public class JSONUtils {
 	/**
 	 * 转换为json字符串
 	 */
-	public static String toJson(Object obj) {
+	public static String toJSON(Object obj) {
 		ObjectMapper om = new ObjectMapper();
 		String resultStr = "";
 		try {

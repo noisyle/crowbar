@@ -1,43 +1,22 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-	<title>XXX管理系统</title>
-	<link href="${ctx}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="${ctx}/static/datatables/css/dataTables.bootstrap.css" rel="stylesheet">
-	<link href="${ctx}/static/metisMenu/metisMenu.min.css" rel="stylesheet">
-	<link href="${ctx}/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-	<link href="${ctx}/static/site/css/admin.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="${ctx}/static/html5shiv.min.js}"></script>
-        <script src="${ctx}/static/respond.min.js}"></script>
-    <![endif]-->
-
-</head>
-
-<body>
+<jsp:include page="/WEB-INF/view/admin/common/header.jsp"></jsp:include>
 
 <div class="container-fluid">
 	<div class="row">
 	    <div class="col-lg-12">
-	        <h1 class="page-header">用户管理</h1>
+	        <h1 class="page-header">用户信息管理</h1>
 	    </div><!-- /.col-lg-12 -->
 	</div><!-- /.row -->
 	<div class="row">
 	    <div class="col-lg-12">
 	        <div class="panel panel-default">
 	            <div class="panel-heading">
-	                用户列表
+			        <div class="btn-group btn-group-sm pull-right" role="group" aria-label="...">
+			          <button type="button" class="btn btn-default" id="btnAdd">新增用户信息</button>
+			          <button type="button" class="btn btn-default" id="btnReload">刷新列表</button>
+			        </div>
+			        <div class="panel-title">用户信息列表</div>
 	            </div><!-- /.panel-heading -->
 	            <div class="panel-body">
 		            <table id="table" class="table table-hover table-striped table-bordered table-condensed" cellspacing="0" width="100%">
@@ -58,16 +37,12 @@
 	</div><!-- /.row -->
 </div><!-- /.container-fluid -->
 
-<script src="${ctx}/static/jquery/jquery-1.11.2.min.js"></script>
-<script src="${ctx}/static/bootstrap/js/bootstrap.min.js"></script>
-<script src="${ctx}/static/datatables/js/jquery.dataTables.min.js"></script>
-<script src="${ctx}/static/datatables/js/dataTables.bootstrap.js"></script>
-<script src="${ctx}/static/utils.js"></script>
 <script>
+var table;
 $(function() {
-	$('#table').DataTable({
+	table = $('#table').DataTable({
 		ajax : {
-			url: '${ctx}/admin/user'
+			url: '${ctx}/admin/userlist'
 		},
 		serverSide: true,
 		columns : [
@@ -82,13 +57,42 @@ $(function() {
 	        targets: -1,
 	        render: function (a, b, c, d) {
 	            var html = " ";
-	            html += '<button type="button" class="btn btn-primary btn-xs" onclick="alert(\'' + c.name + '\')">修改</button> ';
-	            html += '<button type="button" class="btn btn-danger btn-xs" onclick="alert(\'' + c.name + '\')">删除</button> ';
+	            html += '<button type="button" class="btn btn-primary btn-xs" onclick="view(\'' + c.id + '\')">修改</button> ';
+	            html += '<button type="button" class="btn btn-danger btn-xs" data-id="'+c.id+'" onclick="del(this)">删除</button> ';
 	            return html;
 	        }
 	    }]
 	});
+	
+	$("#btnAdd").on("click", function(){
+		window.location.href="${ctx}/admin/adduser";
+	});
+	
+	$("#btnReload").on("click", function(){
+		table.ajax.reload(null, false);
+	});
+	
 });
+
+function view(id){
+	window.location.href="${ctx}/admin/viewuser?id="+id;
+}
+
+function del(obj){
+	console.log($(obj).data())
+	$.ajax({
+		url:"${ctx}/admin/deluser",
+		method:"post",
+		data:$(obj).data(),
+		dataType:"json",
+		success:function(r){
+			alert(r.message);
+			if(r.status=="SUCCESS"){
+				table.ajax.reload(null, false);
+			}
+		}
+	});
+	return false;
+}
 </script>
-</body>
-</html>
+<jsp:include page="/WEB-INF/view/admin/common/footer.jsp"></jsp:include>

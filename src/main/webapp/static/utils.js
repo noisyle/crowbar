@@ -24,6 +24,9 @@
 			data: function(d) {return JSON.stringify(d)}
 		}
 	});
+	
+	//修改select2插件默认值
+	!$.fn.select2 || $.extend($.fn.select2.defaults, $.fn.select2.locales['zh-CN']);
 }(jQuery);
 
 //为日期增加格式化方法

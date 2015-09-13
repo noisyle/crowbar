@@ -9,15 +9,17 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.noisyle.crowbar.constant.AdminConstant;
 import com.noisyle.crowbar.core.base.BaseController;
 import com.noisyle.crowbar.core.exception.GeneralException;
-import com.noisyle.crowbar.core.pagination.Page;
 import com.noisyle.crowbar.core.pagination.PageParam;
 import com.noisyle.crowbar.core.vo.ResponseData;
 import com.noisyle.crowbar.model.User;
@@ -62,15 +64,41 @@ public class AdminController extends BaseController {
 		return "admin/main";
 	}
 	
-	@RequestMapping(value="/users", method=RequestMethod.GET)
-	public String userList(HttpServletRequest request) {
+	@RequestMapping(value="/userlist", method=RequestMethod.GET)
+	public String userList() {
 		return "admin/user/list";
 	}
 	
-	@RequestMapping(value="/user", method=RequestMethod.POST)
+	@RequestMapping(value="/userlist", method=RequestMethod.POST)
 	@ResponseBody
-	public Object list(@RequestBody PageParam pageParam) {
-		Page<User> page = userRepository.getPage(pageParam);
-		return page;
+	public Object querUserList(@RequestBody PageParam pageParam) {
+		return userRepository.getPage(pageParam);
+	}
+	
+	@RequestMapping(value="/adduser", method=RequestMethod.GET)
+	public String addUser(Model model) {
+		model.addAttribute("json_role", AdminConstant.Role.getJSONString(0));
+		return "admin/user/add";
+	}
+	
+	@RequestMapping(value="/viewuser", method=RequestMethod.GET)
+	public String viewUser(Model model, @RequestParam String id) {
+		model.addAttribute("user", userRepository.findById(id));
+		model.addAttribute("json_role", AdminConstant.Role.getJSONString(0));
+		return "admin/user/view";
+	}
+	
+	@RequestMapping(value="/saveuser", method=RequestMethod.POST)
+	@ResponseBody
+	public Object save(User user) {
+		userRepository.save(user);
+		return ResponseData.buildSuccessResponse(user, "保存成功");
+	}
+	
+	@RequestMapping(value="/deluser", method=RequestMethod.POST)
+	@ResponseBody
+	public Object del(User user) {
+		userRepository.delete(user.getId());
+		return ResponseData.buildSuccessResponse(user.getId(), "删除成功");
 	}
 }

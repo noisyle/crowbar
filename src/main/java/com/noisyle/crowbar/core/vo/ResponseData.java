@@ -26,6 +26,10 @@ public class ResponseData {
     public static ResponseData buildSuccessResponse(Object data) {
         return ResponseData.buildResponseData(Status.SUCCESS, data, null, 0);
     }
+    
+    public static ResponseData buildSuccessResponse(Object data, String message) {
+    	return ResponseData.buildResponseData(Status.SUCCESS, data, message, 0);
+    }
 
     public static ResponseData buildErrorResponse(String message) {
         return ResponseData.buildResponseData(Status.ERROR, null, message, 0);
