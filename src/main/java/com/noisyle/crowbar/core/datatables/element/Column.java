@@ -1,4 +1,6 @@
-package com.noisyle.crowbar.core.pagination.element;
+package com.noisyle.crowbar.core.datatables.element;
+
+import com.noisyle.crowbar.core.datatables.IFormatter;
 
 public class Column {
 	private String data;
@@ -6,6 +8,7 @@ public class Column {
 	private boolean searchable;
 	private boolean orderable;
 	private Search search;
+	private IFormatter formatter;
 	
 	public String getData() {
 		return data;
@@ -36,5 +39,11 @@ public class Column {
 	}
 	public void setSearch(Search search) {
 		this.search = search;
+	}
+	public IFormatter getFormatter() {
+		return formatter;
+	}
+	public void setFormatter(IFormatter formatter) {
+		this.formatter = formatter;
 	}
 }

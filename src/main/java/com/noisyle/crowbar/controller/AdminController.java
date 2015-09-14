@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.noisyle.crowbar.constant.AdminConstant;
 import com.noisyle.crowbar.core.base.BaseController;
+import com.noisyle.crowbar.core.datatables.IFormatter;
+import com.noisyle.crowbar.core.datatables.PageParam;
 import com.noisyle.crowbar.core.exception.GeneralException;
-import com.noisyle.crowbar.core.pagination.PageParam;
 import com.noisyle.crowbar.core.vo.ResponseData;
 import com.noisyle.crowbar.model.User;
 import com.noisyle.crowbar.repository.UserRepository;
@@ -72,7 +73,13 @@ public class AdminController extends BaseController {
 	@RequestMapping(value="/userlist", method=RequestMethod.POST)
 	@ResponseBody
 	public Object querUserList(@RequestBody PageParam pageParam) {
-		return userRepository.getPage(pageParam);
+		pageParam.getColumns()[2].setFormatter(new IFormatter() {
+			@Override
+			public Object format(Object value) {
+				return AdminConstant.Role.getText((String)value);
+			}
+		});
+		return userRepository.getFormatedPage(pageParam);
 	}
 	
 	@RequestMapping(value="/adduser", method=RequestMethod.GET)

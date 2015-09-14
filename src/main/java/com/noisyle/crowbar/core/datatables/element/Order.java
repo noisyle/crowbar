@@ -1,4 +1,4 @@
-package com.noisyle.crowbar.core.pagination.element;
+package com.noisyle.crowbar.core.datatables.element;
 
 public class Order {
 	private int column;

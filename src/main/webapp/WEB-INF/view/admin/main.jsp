@@ -156,7 +156,7 @@
                             <a href="${ctx}/admin/userlist"><i class="fa fa-th-list fa-fw"></i> 栏目管理</a>
                         </li>
                         <li>
-                            <a href="${ctx}/admin/userlist"><i class="fa fa-file-text fa-fw"></i> 内容管理</a>
+                            <a href="#"><i class="fa fa-file-text fa-fw"></i> 内容管理</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>

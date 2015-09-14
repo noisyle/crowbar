@@ -1,8 +1,8 @@
-package com.noisyle.crowbar.core.pagination;
+package com.noisyle.crowbar.core.datatables;
 
-import com.noisyle.crowbar.core.pagination.element.Column;
-import com.noisyle.crowbar.core.pagination.element.Order;
-import com.noisyle.crowbar.core.pagination.element.Search;
+import com.noisyle.crowbar.core.datatables.element.Column;
+import com.noisyle.crowbar.core.datatables.element.Order;
+import com.noisyle.crowbar.core.datatables.element.Search;
 
 public class PageParam {
 	private int draw = 1;

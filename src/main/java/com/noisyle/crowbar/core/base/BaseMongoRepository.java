@@ -12,8 +12,10 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
-import com.noisyle.crowbar.core.pagination.Page;
-import com.noisyle.crowbar.core.pagination.PageParam;
+import com.noisyle.crowbar.core.datatables.FormatHandler;
+import com.noisyle.crowbar.core.datatables.FormatedPage;
+import com.noisyle.crowbar.core.datatables.Page;
+import com.noisyle.crowbar.core.datatables.PageParam;
 import com.noisyle.crowbar.core.util.ReflectionUtils;
 
 public class BaseMongoRepository<T extends BaseModel, ID extends Serializable> {
@@ -114,4 +116,8 @@ public class BaseMongoRepository<T extends BaseModel, ID extends Serializable> {
 		return Page;
 	}
 	
+	public FormatedPage getFormatedPage(PageParam pageParam) {
+		// 分页查询结果格式化
+		return FormatHandler.handle(getPage(pageParam), pageParam);
+	}
 }

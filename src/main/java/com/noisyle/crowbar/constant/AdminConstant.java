@@ -9,23 +9,37 @@ import com.noisyle.crowbar.core.util.JSONUtils;
 
 public class AdminConstant {
 	public static enum Role {
-		ADMIN(1, "管理员"),
-		USER(2, "用户");
+		ADMIN("admin", "管理员"),
+		USER("user", "用户");
 		
-		private int id;
+		private String id;
 		private String text;
 		
-		private Role(int id, String text){
+		private Role(String id, String text){
 			this.id = id;
 			this.text = text;
 		}
 		
-		public int getId(){
+		public String getId(){
 			return this.id;
 		}
 		
 		public String getText(){
 			return this.text;
+		}
+		
+		public static String getText(String id){
+			String text = null;
+			if(id != null){
+				id = id.trim();
+				for(Role role:Role.values()){
+					if(role.id.equals(id)){
+						text = role.text;
+						break;
+					}
+				}
+			}
+			return text;
 		}
 		
 		public static String getJSONString(int extra){

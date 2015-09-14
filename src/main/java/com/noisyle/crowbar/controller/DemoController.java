@@ -28,7 +28,7 @@ public class DemoController extends BaseController {
 		user.setPassword(pass);
 		user.setPhone("13"+RandomStringUtils.randomNumeric(11));
 		user.setEmail(user.getLoginname()+"@crowbar.com");
-		user.setRole("管理员");
+		user.setRole("admin");
 		mongoTemplate.save(user);
 		user = new User();
 		user.setLoginname("admin2");
@@ -36,7 +36,7 @@ public class DemoController extends BaseController {
 		user.setPassword(pass);
 		user.setPhone("13"+RandomStringUtils.randomNumeric(11));
 		user.setEmail(user.getLoginname()+"@crowbar.com");
-		user.setRole("管理员");
+		user.setRole("admin");
 		mongoTemplate.save(user);
 		for(int i = 0;i<100;i++){
 			user = new User();
@@ -45,7 +45,7 @@ public class DemoController extends BaseController {
 			user.setPassword(pass);
 			user.setPhone("13"+RandomStringUtils.randomNumeric(11));
 			user.setEmail(user.getLoginname()+"@crowbar.com");
-			user.setRole("用户");
+			user.setRole("user");
 			mongoTemplate.save(user);
 		}
 		return "初始化成功";

@@ -1,4 +1,4 @@
-package com.noisyle.crowbar.core.pagination;
+package com.noisyle.crowbar.core.datatables;
 
 import java.util.List;
 
