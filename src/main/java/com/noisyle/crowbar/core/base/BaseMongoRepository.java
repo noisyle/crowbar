@@ -61,8 +61,8 @@ public class BaseMongoRepository<T extends BaseModel, ID extends Serializable> {
 		return mongoTemplate.count(new Query(), clazz);
 	}
 
-	public void delete(ID id) {
-		mongoTemplate.remove(findById(id));
+	public void delete(String id) {
+		mongoTemplate.remove(Query.query(Criteria.where(ID_KEY).is(id)), clazz);
 	}
 
 	public void delete(T entity) {

@@ -51,7 +51,7 @@ $(function() {
 			{data : "role"},
 			{data : "phone"},
 			{data : "email"},
-			{data : null}
+			{data : "id"}
 		],
         columnDefs: [{
 	        targets: -1,
@@ -79,7 +79,6 @@ function view(id){
 }
 
 function del(obj){
-	console.log($(obj).data())
 	$.ajax({
 		url:"${ctx}/admin/deluser",
 		method:"post",
