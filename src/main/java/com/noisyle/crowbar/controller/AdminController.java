@@ -22,6 +22,7 @@ import com.noisyle.crowbar.core.base.BaseController;
 import com.noisyle.crowbar.core.datatables.IFormatter;
 import com.noisyle.crowbar.core.datatables.PageParam;
 import com.noisyle.crowbar.core.exception.GeneralException;
+import com.noisyle.crowbar.core.util.CryptoUtils;
 import com.noisyle.crowbar.core.vo.ResponseData;
 import com.noisyle.crowbar.model.User;
 import com.noisyle.crowbar.repository.UserRepository;
@@ -98,6 +99,7 @@ public class AdminController extends BaseController {
 	@RequestMapping(value="/saveuser", method=RequestMethod.POST)
 	@ResponseBody
 	public Object save(User user) {
+		user.setPassword(CryptoUtils.md5("123456"));
 		userRepository.save(user);
 		return ResponseData.buildSuccessResponse(user, "保存成功");
 	}
