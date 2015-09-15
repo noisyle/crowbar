@@ -9,6 +9,21 @@ import com.noisyle.crowbar.core.base.BaseController;
 public class IndexController extends BaseController {
 	@RequestMapping("/")
 	public String index() {
-		return "index";
+		return "blog/index";
+	}
+	
+	@RequestMapping("/about")
+	public String about() {
+		return "blog/about";
+	}
+	
+	@RequestMapping("/post")
+	public String post() {
+		return "blog/post";
+	}
+	
+	@RequestMapping("/contact")
+	public String contact() {
+		return "blog/contact";
 	}
 }
