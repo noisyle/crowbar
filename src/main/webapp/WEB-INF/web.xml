@@ -19,6 +19,18 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<!-- 配置shiro的核心拦截器 -->
+	
+	<!-- 防止Xss攻击 -->
+	<filter>
+	    <filter-name>XssFilter</filter-name>
+	    <filter-class>com.noisyle.crowbar.core.xss.XssFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>XssFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	    <dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<!-- 防止Xss攻击 -->
 
 	<!-- Spring配置开始 -->
 	<context-param>
@@ -38,20 +50,6 @@
 		<filter-name>HiddenHttpMethodFilter</filter-name>
 		<servlet-name>springmvc</servlet-name>
 	</filter-mapping>
-	<servlet>
-		<description>spring mvc拦截器</description>
-		<servlet-name>springmvc</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath*:springmvc.xml</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>springmvc</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
 	<filter>
 		<description>字符集过滤器</description>
 		<filter-name>encodingFilter</filter-name>
@@ -70,6 +68,20 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<servlet>
+		<description>spring mvc拦截器</description>
+		<servlet-name>springmvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath*:springmvc.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springmvc</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
 	<!-- Spring配置结束 -->
 
 	<error-page>
