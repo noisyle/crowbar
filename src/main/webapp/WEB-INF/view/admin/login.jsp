@@ -24,6 +24,11 @@
 </head>
 
 <body>
+<script>
+if(window.parent!=window){
+	window.parent.location.href="${ctx}/admin/login";
+}
+</script>
 
     <div class="container">
         <div class="center-block" style="max-width:300px;">

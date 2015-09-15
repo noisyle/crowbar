@@ -25,7 +25,7 @@ public class BaseMongoRepository<T extends BaseModel, ID extends Serializable> {
 	protected MongoTemplate mongoTemplate;
 	
 	protected Class<T> clazz;
-	protected static final String ID_KEY = "_id";
+	protected static final String ID_KEY = "id";
 
 	/**
 	 * 用于Dao层子类使用的构造函数. 通过子类的泛型定义取得对象类型Class.

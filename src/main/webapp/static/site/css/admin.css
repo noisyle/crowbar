@@ -363,7 +363,15 @@ table.dataTable thead .sorting:after {
     color: #df8a13;
 }
 
-/*! custom */
+/*! custom bootstrap panel */
 .panel-heading > .panel-title {
     margin: 3px 0;
+}
+/*! custom select2 */
+.form-control .select2-choice {  
+    height: 34px;  
+    line-height: 34px;  
+}
+.form-control .select2-arrow {  
+    padding: 3px 0;  
 }

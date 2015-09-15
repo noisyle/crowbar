@@ -11,7 +11,6 @@
 
 	<link href="${ctx}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="${ctx}/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-	<link href="${ctx}/static/site/css/admin.css" rel="stylesheet">
 	
 	<!-- dataTables -->
 	<link href="${ctx}/static/datatables/css/dataTables.bootstrap.css" rel="stylesheet">
@@ -19,6 +18,9 @@
 	<!-- select2 -->
 	<link href="${ctx}/static/select2/select2.css" rel="stylesheet">
 	<link href="${ctx}/static/select2/select2-bootstrap.css" rel="stylesheet">
+	
+	<!-- custom style -->
+	<link href="${ctx}/static/site/css/admin.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
