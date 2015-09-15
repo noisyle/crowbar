@@ -10,11 +10,11 @@
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/admin/login" />
 		<property name="successUrl" value="/admin" />
-		<property name="unauthorizedUrl" value="/admin/login" />
+		<property name="unauthorizedUrl" value="/error/unauth" />
 		<property name="filterChainDefinitions">
 			<value>
 				/admin/login = anon
-				/admin/** = authc
+				/admin/** = authc,roles["admin"]
 			</value>
 		</property>
 	</bean>

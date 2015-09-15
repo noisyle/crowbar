@@ -12,8 +12,14 @@ public class ErrorController extends BaseController {
 	public String error404() {
 		return "error/404";
 	}
+	
 	@RequestMapping("/500")
 	public String error500() {
 		return "error/500";
+	}
+	
+	@RequestMapping("/unauth")
+	public String unauth() {
+		return "error/unauth";
 	}
 }

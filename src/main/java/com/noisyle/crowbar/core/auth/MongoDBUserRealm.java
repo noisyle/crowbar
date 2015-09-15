@@ -6,6 +6,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
@@ -52,7 +53,12 @@ public class MongoDBUserRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        return null;
+    	User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+    	SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+    	if(user.getRole()!=null){
+    		info.addRole(user.getRole());
+    	}
+        return info;
     }
 
 }
