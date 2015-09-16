@@ -26,7 +26,7 @@
 
 </head>
 
-<body>
+<body ng-app="mainApp">
 
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
@@ -64,6 +64,52 @@
         <!-- /.container -->
     </nav>
 
+	<div ng-view></div>
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; Your Website 2014</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+	<script src="${ctx}/static/angular/angular.min.js"></script>
+	<script src="${ctx}/static/angular/angular-route.min.js"></script>
+	<script src="${ctx}/static/jquery/jquery-1.11.2.min.js"></script>
+	<script src="${ctx}/static/bootstrap/js/bootstrap.min.js"></script>
+
+	<script type="text/ng-template" id="index">
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
     <header class="intro-header" style="background-image: url('${ctx}/static/site/img/blog/home-bg.jpg')">
@@ -138,50 +184,17 @@
             </div>
         </div>
     </div>
-
-    <hr>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <ul class="list-inline text-center">
-                        <li>
-                            <a href="#">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                    <p class="copyright text-muted">Copyright &copy; Your Website 2014</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-	<script src="${ctx}/static/jquery/jquery-1.11.2.min.js"></script>
-	<script src="${ctx}/static/bootstrap/js/bootstrap.min.js"></script>
-	<script src="${ctx}/static/site/js/blog.js"></script>
-
+	</script>
+	<script>
+	var mainApp = angular.module("mainApp", ['ngRoute']);
+	mainApp.config(['$routeProvider', function($routeProvider) {
+	  $routeProvider
+		.when('/', {templateUrl: 'index', controller: 'IndexController'})
+		.otherwise({redirectTo: '/'});
+	}]);
+	mainApp.controller('IndexController', function($scope, $http) {
+	});
+	</script>
 </body>
 
 </html>
