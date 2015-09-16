@@ -12,6 +12,11 @@ public class IndexController extends BaseController {
 		return "blog/index";
 	}
 	
+	@RequestMapping("/home")
+	public String home() {
+		return "blog/home";
+	}
+	
 	@RequestMapping("/about")
 	public String about() {
 		return "blog/about";

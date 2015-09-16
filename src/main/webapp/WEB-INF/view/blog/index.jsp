@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Clean Blog</title>
+    <title>L&F STUDIO</title>
 
 	<link href="${ctx}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="${ctx}/static/site/css/blog.css" rel="stylesheet">
@@ -39,23 +39,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+                <a class="navbar-brand" href="#/">老李和他的小伙儿伴儿们工作室 </a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="${ctx}">Home</a>
+                        <a href="#/">首页</a>
                     </li>
                     <li>
-                        <a href="${ctx}/about">About</a>
+                        <a href="#/about">关于我们</a>
                     </li>
                     <li>
-                        <a href="${ctx}/post">Sample Post</a>
+                        <a href="#/post">Sample Post</a>
                     </li>
                     <li>
-                        <a href="${ctx}/contact">Contact</a>
+                        <a href="#/contact">联系我们</a>
                     </li>
                 </ul>
             </div>
@@ -98,7 +98,7 @@
                             </a>
                         </li>
                     </ul>
-                    <p class="copyright text-muted">Copyright &copy; Your Website 2014</p>
+                    <p class="copyright text-muted">Copyright &copy; L&F STUDIO 2015</p>
                 </div>
             </div>
         </div>
@@ -109,90 +109,23 @@
 	<script src="${ctx}/static/jquery/jquery-1.11.2.min.js"></script>
 	<script src="${ctx}/static/bootstrap/js/bootstrap.min.js"></script>
 
-	<script type="text/ng-template" id="index">
-    <!-- Page Header -->
-    <!-- Set your background image for this header on the line below. -->
-    <header class="intro-header" style="background-image: url('${ctx}/static/site/img/blog/home-bg.jpg')">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <div class="site-heading">
-                        <h1>Clean Blog</h1>
-                        <hr class="small">
-                        <span class="subheading">A Clean Blog Theme by Start Bootstrap</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-preview">
-                    <a href="${ctx}/post">
-                        <h2 class="post-title">
-                            Man must explore, and this is exploration at its greatest
-                        </h2>
-                        <h3 class="post-subtitle">
-                            Problems look mighty small from 150 miles up
-                        </h3>
-                    </a>
-                    <p class="post-meta">Posted by <a href="#">Start Bootstrap</a> on September 24, 2014</p>
-                </div>
-                <hr>
-                <div class="post-preview">
-                    <a href="${ctx}/post">
-                        <h2 class="post-title">
-                            I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.
-                        </h2>
-                    </a>
-                    <p class="post-meta">Posted by <a href="#">Start Bootstrap</a> on September 18, 2014</p>
-                </div>
-                <hr>
-                <div class="post-preview">
-                    <a href="${ctx}/post">
-                        <h2 class="post-title">
-                            Science has not yet mastered prophecy
-                        </h2>
-                        <h3 class="post-subtitle">
-                            We predict too much for the next year and yet far too little for the next ten.
-                        </h3>
-                    </a>
-                    <p class="post-meta">Posted by <a href="#">Start Bootstrap</a> on August 24, 2014</p>
-                </div>
-                <hr>
-                <div class="post-preview">
-                    <a href="${ctx}/post">
-                        <h2 class="post-title">
-                            Failure is not an option
-                        </h2>
-                        <h3 class="post-subtitle">
-                            Many say exploration is part of our destiny, but it’s actually our duty to future generations.
-                        </h3>
-                    </a>
-                    <p class="post-meta">Posted by <a href="#">Start Bootstrap</a> on July 8, 2014</p>
-                </div>
-                <hr>
-                <!-- Pager -->
-                <ul class="pager">
-                    <li class="next">
-                        <a href="#">Older Posts &rarr;</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-	</script>
 	<script>
 	var mainApp = angular.module("mainApp", ['ngRoute']);
 	mainApp.config(['$routeProvider', function($routeProvider) {
 	  $routeProvider
-		.when('/', {templateUrl: 'index', controller: 'IndexController'})
+		.when('/', {templateUrl: 'home', controller: 'HomeController'})
+		.when('/about', {templateUrl: 'about', controller: 'AboutController'})
+		.when('/post', {templateUrl: 'post', controller: 'PostController'})
+		.when('/contact', {templateUrl: 'contact', controller: 'ContactController'})
 		.otherwise({redirectTo: '/'});
 	}]);
-	mainApp.controller('IndexController', function($scope, $http) {
+	mainApp.controller('HomeController', function($scope, $http) {
+	});
+	mainApp.controller('AboutController', function($scope, $http) {
+	});
+	mainApp.controller('PostController', function($scope, $http) {
+	});
+	mainApp.controller('ContactController', function($scope, $http) {
 	});
 	</script>
 </body>
