@@ -1,5 +1,7 @@
 package com.noisyle.crowbar.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
@@ -24,7 +26,9 @@ import com.noisyle.crowbar.core.datatables.PageParam;
 import com.noisyle.crowbar.core.exception.GeneralException;
 import com.noisyle.crowbar.core.util.CryptoUtils;
 import com.noisyle.crowbar.core.vo.ResponseData;
+import com.noisyle.crowbar.model.Article;
 import com.noisyle.crowbar.model.User;
+import com.noisyle.crowbar.repository.ArticleRepository;
 import com.noisyle.crowbar.repository.UserRepository;
 
 @Controller
@@ -32,6 +36,8 @@ import com.noisyle.crowbar.repository.UserRepository;
 public class AdminController extends BaseController {
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private ArticleRepository articleRepository;
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String login() {
@@ -66,6 +72,8 @@ public class AdminController extends BaseController {
 		return "admin/main";
 	}
 	
+	
+	// 用户管理
 	@RequestMapping(value="/userlist", method=RequestMethod.GET)
 	public String userList() {
 		return "admin/user/list";
@@ -98,7 +106,7 @@ public class AdminController extends BaseController {
 	
 	@RequestMapping(value="/saveuser", method=RequestMethod.POST)
 	@ResponseBody
-	public Object save(User user) {
+	public Object saveUser(User user) {
 		user.setPassword(CryptoUtils.md5("123456"));
 		userRepository.save(user);
 		return ResponseData.buildSuccessResponse(user, "保存成功");
@@ -106,8 +114,50 @@ public class AdminController extends BaseController {
 	
 	@RequestMapping(value="/deluser", method=RequestMethod.POST)
 	@ResponseBody
-	public Object del(User user) {
+	public Object delUser(User user) {
 		userRepository.delete(user.getId());
 		return ResponseData.buildSuccessResponse(user.getId(), "删除成功");
+	}
+	
+	
+	//文章管理
+	@RequestMapping(value="/articlelist", method=RequestMethod.GET)
+	public String articleList() {
+		return "admin/article/list";
+	}
+	
+	@RequestMapping(value="/articlelist", method=RequestMethod.POST)
+	@ResponseBody
+	public Object querArticleList(@RequestBody PageParam pageParam) {
+		return articleRepository.getPage(pageParam);
+	}
+	
+	@RequestMapping(value="/addarticle", method=RequestMethod.GET)
+	public String addArticle(Model model) {
+		return "admin/article/add";
+	}
+	
+	@RequestMapping(value="/viewarticle", method=RequestMethod.GET)
+	public String viewArticle(Model model, @RequestParam String id) {
+		model.addAttribute("article", articleRepository.findById(id));
+		return "admin/article/view";
+	}
+	
+	@RequestMapping(value="/savearticle", method=RequestMethod.POST)
+	@ResponseBody
+	public Object saveArticle(Article article) {
+		if(article.getId()==null){
+			article.setPublishtime(new Date());
+			article.setAuthor((User) SecurityUtils.getSubject().getSession().getAttribute("user"));
+		}
+		articleRepository.save(article);
+		return ResponseData.buildSuccessResponse(article, "保存成功");
+	}
+	
+	@RequestMapping(value="/delarticle", method=RequestMethod.POST)
+	@ResponseBody
+	public Object delArticle(Article article) {
+		articleRepository.delete(article.getId());
+		return ResponseData.buildSuccessResponse(article.getId(), "删除成功");
 	}
 }

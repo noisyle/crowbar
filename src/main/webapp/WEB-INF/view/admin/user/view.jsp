@@ -34,8 +34,8 @@
 		                            </div>
 		                        </div>
 		                    </div>
-		                <div class="row">
 		                </div>
+		                <div class="row">
 		                    <div class="col-md-6">
 		                        <div class="form-group">
 		                            <label for="role" class="col-sm-3 control-label">角色</label>
@@ -44,8 +44,8 @@
 		                            </div>
 		                        </div>
 		                    </div>
-		                <div class="row">
 		                </div>
+		                <div class="row">
 		                    <div class="col-md-6">
 		                        <div class="form-group">
 		                            <label for="phone" class="col-sm-3 control-label">联系电话</label>
@@ -62,8 +62,8 @@
 		                            </div>
 		                        </div>
 		                    </div>
-		                <div class="row">
 		                </div>
+		                <div class="row">
 		                    <div class="col-md-12">
 			                    <div class="pull-right">
 		                        <button class="btn btn-primary">保存用户信息</button>

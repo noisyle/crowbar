@@ -120,6 +120,9 @@
 		.otherwise({redirectTo: '/'});
 	}]);
 	mainApp.controller('HomeController', function($scope, $http) {
+		$http.get("home/articles").success(function(r){
+			$scope.articles = r;
+		});
 	});
 	mainApp.controller('AboutController', function($scope, $http) {
 	});

@@ -5,41 +5,32 @@
 <div class="container-fluid">
 	<div class="row">
 	    <div class="col-lg-12">
-	        <h1 class="page-header">用户信息新增</h1>
+	        <h1 class="page-header">文章修改</h1>
 	    </div><!-- /.col-lg-12 -->
 	</div><!-- /.row -->
 	<div class="row">
 	    <div class="col-lg-12">
 	        <div class="panel panel-default">
 	            <div class="panel-heading">
-	            	<div class="panel-title">用户信息</div>
+	            	<div class="panel-title">文章信息</div>
 	            </div><!-- /.panel-heading -->
 	            <div class="panel-body">
                     <form role="form" class="form-horizontal">
+		                <input type="hidden" id="id" name="id" value="${article.id}">
 	                    <div class="row">
 		                    <div class="col-md-6">
 		                        <div class="form-group">
-		                            <label for="loginname" class="col-sm-3 control-label">登录名称</label>
+		                            <label for="title" class="col-sm-3 control-label">标题</label>
 		                            <div class="col-sm-9">
-		                                <input class="form-control" id="loginname" name="loginname" required autofocus>
+		                                <input class="form-control" id="title" name="title" value="${article.title}" required autofocus>
 		                            </div>
 		                        </div>
 		                    </div>
 		                    <div class="col-md-6">
 		                        <div class="form-group">
-		                            <label for="username" class="col-sm-3 control-label">用户名称</label>
+		                            <label for="subtitle" class="col-sm-3 control-label">副标题</label>
 		                            <div class="col-sm-9">
-		                                <input class="form-control" id="username" name="username" required>
-		                            </div>
-		                        </div>
-		                    </div>
-		                </div>
-		                <div class="row">
-		                    <div class="col-md-6">
-		                        <div class="form-group">
-		                            <label for="role" class="col-sm-3 control-label">角色</label>
-		                            <div class="col-sm-9">
-		                                <input type="hidden" class="form-control" id="role" name="role" required>
+		                                <input class="form-control" id="subtitle" name="subtitle" value="${article.subtitle}" required>
 		                            </div>
 		                        </div>
 		                    </div>
@@ -47,17 +38,9 @@
 		                <div class="row">
 		                    <div class="col-md-6">
 		                        <div class="form-group">
-		                            <label for="phone" class="col-sm-3 control-label">联系电话</label>
+		                            <label for="content" class="col-sm-3 control-label">正文</label>
 		                            <div class="col-sm-9">
-		                                <input class="form-control" id="phone" name="phone">
-		                            </div>
-		                        </div>
-		                    </div>
-		                    <div class="col-md-6">
-		                        <div class="form-group">
-		                            <label for="phone" class="col-sm-3 control-label">电子邮箱</label>
-		                            <div class="col-sm-9">
-		                                <input type="email" class="form-control" id="email" name="email">
+		                                <textarea class="form-control" rows="3" id="content" name="content" required>${article.content}</textarea>
 		                            </div>
 		                        </div>
 		                    </div>
@@ -65,7 +48,7 @@
 		                <div class="row">
 		                    <div class="col-md-12">
 			                    <div class="pull-right">
-		                        <button class="btn btn-primary">保存用户信息</button>
+		                        <button class="btn btn-primary">保存文章</button>
 		                        <button type="button" class="btn btn-default" id="btnBack">返回列表</button>
 		                        </div>
 		                    </div>
@@ -79,26 +62,23 @@
 
 <script>
 $(function() {
-	var json_role = ${json_role};
-	$("#role").select2({data: json_role});
-	
 	$("form").submit(function(){
 		$.ajax({
-			url:"${ctx}/admin/saveuser",
+			url:"${ctx}/admin/savearticle",
 			method:"post",
 			data:$("form").serializeObject(),
 			dataType:"json",
 			success:function(r){
 				alert(r.message);
 				if(r.status=="SUCCESS"){
-					window.location.href="${ctx}/admin/userlist";
+					window.location.href="${ctx}/admin/articlelist";
 				}
 			}
 		});
 		return false;
 	});
 	$("#btnBack").on("click", function(){
-		window.location.href="${ctx}/admin/userlist";
+		window.location.href="${ctx}/admin/articlelist";
 	});
 });
 </script>
