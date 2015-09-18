@@ -52,9 +52,6 @@
                         <a href="#/about">关于我们</a>
                     </li>
                     <li>
-                        <a href="#/post">Sample Post</a>
-                    </li>
-                    <li>
                         <a href="#/contact">联系我们</a>
                     </li>
                 </ul>
@@ -114,8 +111,8 @@
 	mainApp.config(['$routeProvider', function($routeProvider) {
 	  $routeProvider
 		.when('/', {templateUrl: 'home', controller: 'HomeController'})
+		.when('/article/:id', {templateUrl: 'article', controller: 'ArticleController'})
 		.when('/about', {templateUrl: 'about', controller: 'AboutController'})
-		.when('/post', {templateUrl: 'post', controller: 'PostController'})
 		.when('/contact', {templateUrl: 'contact', controller: 'ContactController'})
 		.otherwise({redirectTo: '/'});
 	}]);
@@ -124,9 +121,12 @@
 			$scope.articles = r;
 		});
 	});
-	mainApp.controller('AboutController', function($scope, $http) {
+	mainApp.controller('ArticleController', function($scope, $http, $routeParams) {
+		$http.get("article/"+$routeParams.id).success(function(r){
+			$scope.article = r;
+		});
 	});
-	mainApp.controller('PostController', function($scope, $http) {
+	mainApp.controller('AboutController', function($scope, $http) {
 	});
 	mainApp.controller('ContactController', function($scope, $http) {
 	});

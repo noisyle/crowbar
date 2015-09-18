@@ -19,16 +19,16 @@
 	                    <div class="row">
 		                    <div class="col-md-6">
 		                        <div class="form-group">
-		                            <label for="loginname" class="col-sm-3 control-label">登录名称</label>
-		                            <div class="col-sm-9">
+		                            <label for="loginname" class="col-sm-2 control-label">登录名称</label>
+		                            <div class="col-sm-10">
 		                                <input class="form-control" id="loginname" name="loginname" required autofocus>
 		                            </div>
 		                        </div>
 		                    </div>
 		                    <div class="col-md-6">
 		                        <div class="form-group">
-		                            <label for="username" class="col-sm-3 control-label">用户名称</label>
-		                            <div class="col-sm-9">
+		                            <label for="username" class="col-sm-2 control-label">用户名称</label>
+		                            <div class="col-sm-10">
 		                                <input class="form-control" id="username" name="username" required>
 		                            </div>
 		                        </div>
@@ -37,8 +37,8 @@
 		                <div class="row">
 		                    <div class="col-md-6">
 		                        <div class="form-group">
-		                            <label for="role" class="col-sm-3 control-label">角色</label>
-		                            <div class="col-sm-9">
+		                            <label for="role" class="col-sm-2 control-label">角色</label>
+		                            <div class="col-sm-10">
 		                                <input type="hidden" class="form-control" id="role" name="role" required>
 		                            </div>
 		                        </div>
@@ -47,16 +47,16 @@
 		                <div class="row">
 		                    <div class="col-md-6">
 		                        <div class="form-group">
-		                            <label for="phone" class="col-sm-3 control-label">联系电话</label>
-		                            <div class="col-sm-9">
+		                            <label for="phone" class="col-sm-2 control-label">联系电话</label>
+		                            <div class="col-sm-10">
 		                                <input class="form-control" id="phone" name="phone">
 		                            </div>
 		                        </div>
 		                    </div>
 		                    <div class="col-md-6">
 		                        <div class="form-group">
-		                            <label for="phone" class="col-sm-3 control-label">电子邮箱</label>
-		                            <div class="col-sm-9">
+		                            <label for="phone" class="col-sm-2 control-label">电子邮箱</label>
+		                            <div class="col-sm-10">
 		                                <input type="email" class="form-control" id="email" name="email">
 		                            </div>
 		                        </div>
