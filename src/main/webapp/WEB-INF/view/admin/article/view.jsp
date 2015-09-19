@@ -18,35 +18,35 @@
                     <form role="form" class="form-horizontal">
 		                <input type="hidden" id="id" name="id" value="${article.id}">
 	                    <div class="row">
-		                    <div class="col-md-6">
+		                    <div class="col-sm-6">
 		                        <div class="form-group">
-		                            <label for="title" class="col-sm-2 control-label">标题</label>
-		                            <div class="col-sm-10">
+		                            <label for="title" class="col-sm-4 control-label">标题</label>
+		                            <div class="col-sm-8">
 		                                <input class="form-control" id="title" name="title" value="${article.title}" required autofocus>
 		                            </div>
 		                        </div>
 		                    </div>
-		                    <div class="col-md-6">
+		                    <div class="col-sm-6">
 		                        <div class="form-group">
-		                            <label for="subtitle" class="col-sm-2 control-label">副标题</label>
-		                            <div class="col-sm-10">
+		                            <label for="subtitle" class="col-sm-4 control-label">副标题</label>
+		                            <div class="col-sm-8">
 		                                <input class="form-control" id="subtitle" name="subtitle" value="${article.subtitle}" required>
 		                            </div>
 		                        </div>
 		                    </div>
 		                </div>
 		                <div class="row">
-		                    <div class="col-md-12">
+		                    <div class="col-sm-12">
 		                        <div class="form-group">
-		                            <label for="content" class="col-sm-1 control-label">正文</label>
-		                            <div class="col-sm-11">
+		                            <label for="content" class="col-sm-2 control-label">正文</label>
+		                            <div class="col-sm-10">
 		                                <textarea class="form-control" rows="3" id="content" name="content" required>${article.content}</textarea>
 		                            </div>
 		                        </div>
 		                    </div>
 		                </div>
 		                <div class="row">
-		                    <div class="col-md-12">
+		                    <div class="col-sm-12">
 			                    <div class="pull-right">
 		                        <button class="btn btn-primary">保存文章</button>
 		                        <button type="button" class="btn btn-default" id="btnBack">返回列表</button>

@@ -17,53 +17,53 @@
 	            <div class="panel-body">
                     <form role="form" class="form-horizontal">
 	                    <div class="row">
-		                    <div class="col-md-6">
+		                    <div class="col-sm-6">
 		                        <div class="form-group">
-		                            <label for="loginname" class="col-sm-2 control-label">登录名称</label>
-		                            <div class="col-sm-10">
+		                            <label for="loginname" class="col-sm-4 control-label">登录名称</label>
+		                            <div class="col-sm-8">
 		                                <input class="form-control" id="loginname" name="loginname" required autofocus>
 		                            </div>
 		                        </div>
 		                    </div>
-		                    <div class="col-md-6">
+		                    <div class="col-sm-6">
 		                        <div class="form-group">
-		                            <label for="username" class="col-sm-2 control-label">用户名称</label>
-		                            <div class="col-sm-10">
+		                            <label for="username" class="col-sm-4 control-label">用户名称</label>
+		                            <div class="col-sm-8">
 		                                <input class="form-control" id="username" name="username" required>
 		                            </div>
 		                        </div>
 		                    </div>
 		                </div>
 		                <div class="row">
-		                    <div class="col-md-6">
+		                    <div class="col-sm-6">
 		                        <div class="form-group">
-		                            <label for="role" class="col-sm-2 control-label">角色</label>
-		                            <div class="col-sm-10">
+		                            <label for="role" class="col-sm-4 control-label">角色</label>
+		                            <div class="col-sm-8">
 		                                <input type="hidden" class="form-control" id="role" name="role" required>
 		                            </div>
 		                        </div>
 		                    </div>
 		                </div>
 		                <div class="row">
-		                    <div class="col-md-6">
+		                    <div class="col-sm-6">
 		                        <div class="form-group">
-		                            <label for="phone" class="col-sm-2 control-label">联系电话</label>
-		                            <div class="col-sm-10">
+		                            <label for="phone" class="col-sm-4 control-label">联系电话</label>
+		                            <div class="col-sm-8">
 		                                <input class="form-control" id="phone" name="phone">
 		                            </div>
 		                        </div>
 		                    </div>
-		                    <div class="col-md-6">
+		                    <div class="col-sm-6">
 		                        <div class="form-group">
-		                            <label for="phone" class="col-sm-2 control-label">电子邮箱</label>
-		                            <div class="col-sm-10">
+		                            <label for="phone" class="col-sm-4 control-label">电子邮箱</label>
+		                            <div class="col-sm-8">
 		                                <input type="email" class="form-control" id="email" name="email">
 		                            </div>
 		                        </div>
 		                    </div>
 		                </div>
 		                <div class="row">
-		                    <div class="col-md-12">
+		                    <div class="col-sm-12">
 			                    <div class="pull-right">
 		                        <button class="btn btn-primary">保存用户信息</button>
 		                        <button type="button" class="btn btn-default" id="btnBack">返回列表</button>
