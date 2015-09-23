@@ -153,7 +153,7 @@
                             <a href="${ctx}/admin/userlist"><i class="fa fa-users fa-fw"></i> 用户信息管理</a>
                         </li>
                         <li>
-                            <a href="${ctx}/admin/userlist"><i class="fa fa-th-list fa-fw"></i> 栏目管理</a>
+                            <a href="${ctx}/admin/categorylist"><i class="fa fa-th-list fa-fw"></i> 栏目管理</a>
                         </li>
                         <li>
                             <a href="${ctx}/admin/articlelist"><i class="fa fa-file-text fa-fw"></i> 文章管理</a>

@@ -120,6 +120,13 @@ public class AdminController extends BaseController {
 	}
 	
 	
+	//栏目管理
+	@RequestMapping(value="/categorylist", method=RequestMethod.GET)
+	public String categoryList() {
+		return "admin/category/list";
+	}
+	
+	
 	//文章管理
 	@RequestMapping(value="/articlelist", method=RequestMethod.GET)
 	public String articleList() {
