@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.noisyle.crowbar.constant.AdminConstant.Role;
 import com.noisyle.crowbar.core.base.BaseController;
 import com.noisyle.crowbar.core.util.CryptoUtils;
+import com.noisyle.crowbar.model.Category;
 import com.noisyle.crowbar.model.User;
 
 @Controller
@@ -28,7 +30,7 @@ public class DemoController extends BaseController {
 		user.setPassword(pass);
 		user.setPhone("13"+RandomStringUtils.randomNumeric(11));
 		user.setEmail(user.getLoginname()+"@crowbar.com");
-		user.setRole("admin");
+		user.setRole(Role.ADMIN.toString());
 		mongoTemplate.save(user);
 		user = new User();
 		user.setLoginname("admin2");
@@ -36,7 +38,7 @@ public class DemoController extends BaseController {
 		user.setPassword(pass);
 		user.setPhone("13"+RandomStringUtils.randomNumeric(11));
 		user.setEmail(user.getLoginname()+"@crowbar.com");
-		user.setRole("admin");
+		user.setRole(Role.ADMIN.toString());
 		mongoTemplate.save(user);
 		for(int i = 0;i<100;i++){
 			user = new User();
@@ -45,9 +47,40 @@ public class DemoController extends BaseController {
 			user.setPassword(pass);
 			user.setPhone("13"+RandomStringUtils.randomNumeric(11));
 			user.setEmail(user.getLoginname()+"@crowbar.com");
-			user.setRole("user");
+			user.setRole(Role.USER.toString());
 			mongoTemplate.save(user);
 		}
+		
+		mongoTemplate.dropCollection(Category.class);
+		Category cat1 = new Category();
+		cat1.setCategoryName("栏目1");
+		cat1.setLeaf(false);
+		mongoTemplate.save(cat1);
+		Category cat11 = new Category();
+		cat11.setParentId(cat1.getId());
+		cat11.setCategoryName("栏目1-1");
+		cat11.setLeaf(false);
+		mongoTemplate.save(cat11);
+		Category cat12 = new Category();
+		cat12.setParentId(cat1.getId());
+		cat12.setCategoryName("栏目1-2");
+		cat12.setLeaf(false);
+		mongoTemplate.save(cat12);
+		Category cat2 = new Category();
+		cat2.setCategoryName("栏目2");
+		cat2.setLeaf(false);
+		mongoTemplate.save(cat2);
+		Category cat21 = new Category();
+		cat21.setParentId(cat2.getId());
+		cat21.setCategoryName("栏目2-1");
+		cat21.setLeaf(false);
+		mongoTemplate.save(cat21);
+		Category cat22 = new Category();
+		cat22.setParentId(cat2.getId());
+		cat22.setCategoryName("栏目2-2");
+		cat22.setLeaf(false);
+		mongoTemplate.save(cat22);
+		
 		return "初始化成功";
 	}
 	

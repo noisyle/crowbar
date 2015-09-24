@@ -27,8 +27,10 @@ import com.noisyle.crowbar.core.exception.GeneralException;
 import com.noisyle.crowbar.core.util.CryptoUtils;
 import com.noisyle.crowbar.core.vo.ResponseData;
 import com.noisyle.crowbar.model.Article;
+import com.noisyle.crowbar.model.Category;
 import com.noisyle.crowbar.model.User;
 import com.noisyle.crowbar.repository.ArticleRepository;
+import com.noisyle.crowbar.repository.CategoryRepository;
 import com.noisyle.crowbar.repository.UserRepository;
 
 @Controller
@@ -36,6 +38,8 @@ import com.noisyle.crowbar.repository.UserRepository;
 public class AdminController extends BaseController {
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private CategoryRepository categoryRepository;
 	@Autowired
 	private ArticleRepository articleRepository;
 	
@@ -85,7 +89,7 @@ public class AdminController extends BaseController {
 		pageParam.getColumns()[2].setFormatter(new IFormatter() {
 			@Override
 			public Object format(Object value) {
-				return AdminConstant.Role.getText((String)value);
+				return AdminConstant.Role.get((String)value).getText();
 			}
 		});
 		return userRepository.getFormatedPage(pageParam);
@@ -124,6 +128,35 @@ public class AdminController extends BaseController {
 	@RequestMapping(value="/categorylist", method=RequestMethod.GET)
 	public String categoryList() {
 		return "admin/category/list";
+	}
+	
+	@RequestMapping(value="/categorylist", method=RequestMethod.POST)
+	@ResponseBody
+	public Object querCategoryList() {
+		return categoryRepository.findAll();
+	}
+	
+	@RequestMapping(value="/viewcategory", method=RequestMethod.GET)
+	public String viewCategory(Model model, @RequestParam String id) {
+		model.addAttribute("article", articleRepository.findById(id));
+		return "admin/article/view";
+	}
+	
+	@RequestMapping(value="/savecategory", method=RequestMethod.POST)
+	@ResponseBody
+	public Object saveCategory(Category category) {
+		if(category.getId()==null){
+			category.setLeaf(true);
+		}
+		categoryRepository.save(category);
+		return ResponseData.buildSuccessResponse(category, "保存成功");
+	}
+	
+	@RequestMapping(value="/delcategory", method=RequestMethod.POST)
+	@ResponseBody
+	public Object delCategory(Category category) {
+		categoryRepository.delete(category.getId());
+		return ResponseData.buildSuccessResponse(category.getId(), "删除成功");
 	}
 	
 	

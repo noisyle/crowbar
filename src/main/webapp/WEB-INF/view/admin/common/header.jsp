@@ -19,6 +19,9 @@
 	<link href="${ctx}/static/select2/select2.css" rel="stylesheet">
 	<link href="${ctx}/static/select2/select2-bootstrap.css" rel="stylesheet">
 	
+	<!-- ztree -->
+	<link rel="stylesheet" href="${ctx}/static/ztree/css/metroStyle.css" type="text/css">
+	
 	<!-- custom style -->
 	<link href="${ctx}/static/site/css/admin.css" rel="stylesheet">
 
@@ -39,6 +42,9 @@
 	<!-- select2 -->
 	<script src="${ctx}/static/select2/select2.min.js"></script>
 	<script src="${ctx}/static/select2/select2_locale_zh-CN.js"></script>
+	
+	<!-- ztree -->
+	<script type="text/javascript" src="${ctx}/static/ztree/js/jquery.ztree.core-3.5.min.js"></script>
 	
 	<script src="${ctx}/static/utils.js"></script>
 </head>

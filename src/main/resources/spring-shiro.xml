@@ -14,7 +14,7 @@
 		<property name="filterChainDefinitions">
 			<value>
 				/admin/login = anon
-				/admin/** = authc,roles["admin"]
+				/admin/** = authc,roles["ADMIN"]
 			</value>
 		</property>
 	</bean>

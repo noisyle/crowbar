@@ -13,17 +13,18 @@
 	        <div class="panel panel-default">
 	            <div class="panel-heading">
 			        <div class="btn-group btn-group-sm pull-right" role="group" aria-label="...">
-			          <button type="button" class="btn btn-default" id="btnAdd">新增文章</button>
+			          <button type="button" class="btn btn-default" id="btnAdd">新增根栏目</button>
+			          <button type="button" class="btn btn-default" id="btnAddSub">新增子栏目</button>
 			          <button type="button" class="btn btn-default" id="btnReload">刷新列表</button>
 			        </div>
-			        <div class="panel-title">文章列表</div>
+			        <div class="panel-title">栏目列表</div>
 	            </div><!-- /.panel-heading -->
 	            <div class="panel-body">
 					<div class="row">
-					    <div class="col-md-2">
-					    	
+					    <div class="col-sm-2">
+					    	<ul id="categoryTree" class="ztree" style="min-height:200px;"></ul>
 					    </div>
-					    <div class="col-md-10">
+					    <div class="col-sm-10">
 		                    <form role="form" class="form-horizontal">
 			                    <div class="row">
 				                    <div class="col-sm-12">
@@ -60,10 +61,45 @@
 </div><!-- /.container-fluid -->
 
 <script>
-var table;
+var ztree;
+var ztree_setting = {
+	data: {
+		key: {
+			name: 'categoryName'
+		},
+		simpleData: {
+			enable: true,
+			idKey: 'id',
+			pIdKey: 'parentId',
+			rootPId: null
+		}
+	}
+};
 $(function() {
+
+	$.ajax({
+		url:"${ctx}/admin/categorylist",
+		method:"post",
+		dataType:"json",
+		success:function(r){
+			ztree = $.fn.zTree.init($("#categoryTree"), ztree_setting, r);
+		}
+	});
 	
-	
+	$("form").submit(function(){
+		$.ajax({
+			url:"${ctx}/admin/savecategory",
+			method:"post",
+			data:$("form").serializeObject(),
+			dataType:"json",
+			success:function(r){
+				alert(r.message);
+				if(r.status=="SUCCESS"){
+				}
+			}
+		});
+		return false;
+	});
 });
 
 </script>
