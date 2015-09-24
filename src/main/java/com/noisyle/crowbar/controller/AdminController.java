@@ -136,17 +136,11 @@ public class AdminController extends BaseController {
 		return categoryRepository.findAll();
 	}
 	
-	@RequestMapping(value="/viewcategory", method=RequestMethod.GET)
-	public String viewCategory(Model model, @RequestParam String id) {
-		model.addAttribute("article", articleRepository.findById(id));
-		return "admin/article/view";
-	}
-	
 	@RequestMapping(value="/savecategory", method=RequestMethod.POST)
 	@ResponseBody
 	public Object saveCategory(Category category) {
-		if(category.getId()==null){
-			category.setLeaf(true);
+		if("".equals(category.getParentId())){
+			category.setParentId(null);
 		}
 		categoryRepository.save(category);
 		return ResponseData.buildSuccessResponse(category, "保存成功");

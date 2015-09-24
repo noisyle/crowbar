@@ -45,6 +45,9 @@ public class BaseMongoRepository<T extends BaseModel, ID extends Serializable> {
 	}
 
 	public <S extends T> S save(S entity) {
+		if("".equals(entity.id)){
+			entity.setId(null);
+		}
 		mongoTemplate.save(entity);
 		return entity;
 	}

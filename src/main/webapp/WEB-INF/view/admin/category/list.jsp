@@ -15,31 +15,34 @@
 			        <div class="btn-group btn-group-sm pull-right" role="group" aria-label="...">
 			          <button type="button" class="btn btn-default" id="btnAdd">新增根栏目</button>
 			          <button type="button" class="btn btn-default" id="btnAddSub">新增子栏目</button>
+			          <button type="button" class="btn btn-default" id="btnDel">删除栏目</button>
 			          <button type="button" class="btn btn-default" id="btnReload">刷新列表</button>
 			        </div>
 			        <div class="panel-title">栏目列表</div>
 	            </div><!-- /.panel-heading -->
 	            <div class="panel-body">
 					<div class="row">
-					    <div class="col-sm-2">
+					    <div class="col-sm-3">
 					    	<ul id="categoryTree" class="ztree" style="min-height:200px;"></ul>
 					    </div>
-					    <div class="col-sm-10">
+					    <div class="col-sm-9">
 		                    <form role="form" class="form-horizontal">
 			                    <div class="row">
 				                    <div class="col-sm-12">
 				                        <div class="form-group">
-				                            <label for="subtitle" class="col-sm-4 control-label">父栏目</label>
-				                            <div class="col-sm-8">
-				                                <input class="form-control" id="parent" name="parent">
+				                            <label for="subtitle" class="col-sm-2 control-label">父栏目</label>
+				                            <div class="col-sm-10">
+				                                <input class="form-control" id="parent" name="parent" disabled>
+				                                <input type="hidden" id="parentId" name="parentId">
 				                            </div>
 				                        </div>
 				                    </div>
 				                    <div class="col-sm-12">
 				                        <div class="form-group">
-				                            <label for="title" class="col-sm-4 control-label">栏目名称</label>
-				                            <div class="col-sm-8">
-				                                <input class="form-control" id="categoryname" name="categoryname" required autofocus>
+				                            <label for="title" class="col-sm-2 control-label">栏目名称</label>
+				                            <div class="col-sm-10">
+				                                <input class="form-control" id="categoryName" name="categoryName" required autofocus>
+				                                <input type="hidden" id="id" name="id">
 				                            </div>
 				                        </div>
 				                    </div>
@@ -73,18 +76,13 @@ var ztree_setting = {
 			pIdKey: 'parentId',
 			rootPId: null
 		}
+	},
+	callback: {
+		onClick: loadForm
 	}
 };
 $(function() {
-
-	$.ajax({
-		url:"${ctx}/admin/categorylist",
-		method:"post",
-		dataType:"json",
-		success:function(r){
-			ztree = $.fn.zTree.init($("#categoryTree"), ztree_setting, r);
-		}
-	});
+	initTree();
 	
 	$("form").submit(function(){
 		$.ajax({
@@ -95,12 +93,90 @@ $(function() {
 			success:function(r){
 				alert(r.message);
 				if(r.status=="SUCCESS"){
+					reload();
 				}
 			}
 		});
 		return false;
 	});
+	
+	$(".panel-heading").on('click', 'button', function(e){
+		switch (this.id) {
+		case 'btnAdd':
+			add();
+			break;
+		case 'btnAddSub':
+			addSub();
+			break;
+		case 'btnDel':
+			del();
+			break;
+		case 'btnReload':
+			reload();
+			break;
+		default:
+			break;
+		}
+	});
 });
 
+function loadForm(event, treeId, treeNode){
+	var parent = ztree.getNodeByTId(treeNode.parentTId);
+	$("#parent").val(parent?parent.categoryName:'');
+	$("#parentId").val(parent?parent.id:'');
+	$("#categoryName").val(treeNode.categoryName);
+	$("#id").val(treeNode.id);
+}
+
+function initTree(){
+	$.ajax({
+		url:"${ctx}/admin/categorylist",
+		method:"post",
+		dataType:"json",
+		success:function(r){
+			ztree = $.fn.zTree.init($("#categoryTree"), ztree_setting, r);
+		}
+	});
+}
+
+function add(){
+	$("#parent").val('');
+	$("#parentId").val('');
+	$("#categoryName").val('');
+	$("#id").val('');
+}
+
+function addSub(){
+	var select = ztree.getSelectedNodes();
+	if(!select.length){
+		alert('请选择一个栏目');
+		return;
+	}
+	var parent = select[0];
+	$("#parent").val(parent.categoryName);
+	$("#parentId").val(parent.id);
+	$("#categoryName").val('');
+	$("#id").val('');
+}
+
+function del(){
+	$.ajax({
+		url:"${ctx}/admin/delcategory",
+		method:"post",
+		data:$("form").serializeObject(),
+		dataType:"json",
+		success:function(r){
+			alert(r.message);
+			if(r.status=="SUCCESS"){
+				reload();
+			}
+		}
+	});
+}
+
+function reload(){
+	$.fn.zTree.destroy("categoryTree");
+	initTree();
+}
 </script>
 <jsp:include page="/WEB-INF/view/admin/common/footer.jsp"></jsp:include>
