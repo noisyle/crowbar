@@ -8,7 +8,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +25,7 @@ import com.noisyle.crowbar.core.datatables.PageParam;
 import com.noisyle.crowbar.core.exception.GeneralException;
 import com.noisyle.crowbar.core.util.CryptoUtils;
 import com.noisyle.crowbar.core.vo.ResponseData;
+import com.noisyle.crowbar.core.vo.UserContext;
 import com.noisyle.crowbar.model.Article;
 import com.noisyle.crowbar.model.Category;
 import com.noisyle.crowbar.model.User;
@@ -63,16 +63,13 @@ public class AdminController extends BaseController {
 	
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
 	public String logout(HttpServletRequest request) {
-		SecurityUtils.getSubject().getSession().removeAttribute("user");
+		SecurityUtils.getSubject().getSession().removeAttribute("uctx");
 		SecurityUtils.getSubject().logout();
 		return "admin/login";
 	}
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String main(HttpServletRequest request) {
-		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
-		request.setAttribute("user", user);
-		request.setAttribute("today", LocalDate.now().toString());
 		return "admin/main";
 	}
 	
@@ -182,7 +179,7 @@ public class AdminController extends BaseController {
 	public Object saveArticle(Article article) {
 		if(article.getId()==null){
 			article.setPublishtime(new Date());
-			article.setAuthor((User) SecurityUtils.getSubject().getSession().getAttribute("user"));
+			article.setAuthor((User) ((UserContext) SecurityUtils.getSubject().getSession().getAttribute("uctx")).getUser());
 		}
 		articleRepository.save(article);
 		return ResponseData.buildSuccessResponse(article, "保存成功");

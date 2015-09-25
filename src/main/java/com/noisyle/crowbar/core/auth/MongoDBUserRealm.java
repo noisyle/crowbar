@@ -9,11 +9,12 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.noisyle.crowbar.model.User;
+import com.noisyle.crowbar.core.vo.UserContext;
 import com.noisyle.crowbar.repository.UserRepository;
 
 public class MongoDBUserRealm extends AuthorizingRealm {
@@ -39,9 +40,11 @@ public class MongoDBUserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-        User user = userRepository.getUserByLoginName(token.getUsername());
+        IUser user = userRepository.getUserByLoginName(token.getUsername());
         if(user != null) {
-        	SecurityUtils.getSubject().getSession().setAttribute("user", user);
+        	UserContext uctx = new UserContext(user);
+        	uctx.setLoginTime(LocalDate.now().toDate());
+        	SecurityUtils.getSubject().getSession().setAttribute("uctx", uctx);
             return new SimpleAuthenticationInfo(user.getId(), user.getPassword(), getName());
         } else {
             return null;
@@ -53,7 +56,7 @@ public class MongoDBUserRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-    	User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+    	IUser user = ((UserContext) SecurityUtils.getSubject().getSession().getAttribute("uctx")).getUser();
     	SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
     	if(user.getRole()!=null){
     		info.addRole(user.getRole());
