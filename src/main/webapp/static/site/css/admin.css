@@ -13,6 +13,12 @@ body {
     width: 100%;
 }
 
+@media(min-width:768px) {
+    #side-menu {
+        overflow-y: auto;
+    }
+}
+
 #page-wrapper {
     padding: 0;
     background-color: #fff;
@@ -378,5 +384,8 @@ table.dataTable thead .sorting:after {
 }
 .form-horizontal input.form-control {
 	height: 26px;
+	padding: 2px 8px;
+}
+.form-horizontal textarea.form-control {
 	padding: 2px 8px;
 }

@@ -24,6 +24,7 @@
 		                <tr>
 		                  <th>标题</th>
 		                  <th>副标题</th>
+		                  <th>作者</th>
 		                  <th>发布时间</th>
 		                  <th></th>
 		                </tr>
@@ -46,11 +47,12 @@ $(function() {
 		columns : [
 			{data : "title"},
 			{data : "subtitle"},
+			{data : "author.username"},
 			{data : "publishtime", type: "date"},
 			{data : "id"}
 		],
         columnDefs: [{
-	        targets: 2,
+	        targets: -2,
 	        render: function (data, type, row, meta) {
 	            return new Date(data).format("yyyy-MM-dd hh:mm:ss");
 	        }

@@ -12,6 +12,9 @@ $(function() {
 	    if (element.is('li')) {
 	    	element.addClass('active');
 	    }
+	    
+	    // Closes the Responsive Menu on Menu Item Click
+        $('.navbar-toggle:visible').click();
 		return false;
     });
 });
@@ -34,7 +37,13 @@ $(function() {
         height = height - topOffset;
         if (height < 1) height = 1;
         if (height > topOffset) {
-            $("#page-wrapper").css("height", (height) + "px");
+            if (width < 768) {
+            	$("#page-wrapper").css("height", "800px");
+            	$("#side-menu").css("height", "auto");
+            }else{
+            	$("#page-wrapper").css("height", (height) + "px");
+            	$("#side-menu").css("height", (height - 65) + "px");
+            }
         }
     });
 

@@ -1,13 +1,12 @@
 package com.noisyle.crowbar.controller;
 
-import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -178,8 +177,12 @@ public class AdminController extends BaseController {
 	@ResponseBody
 	public Object saveArticle(Article article) {
 		if(article.getId()==null){
-			article.setPublishtime(new Date());
+			article.setPublishtime(LocalDate.now().toDate());
 			article.setAuthor((User) ((UserContext) SecurityUtils.getSubject().getSession().getAttribute("uctx")).getUser());
+		}else{
+			Article article_db = articleRepository.findById(article.getId());
+			article.setAuthor(article_db.getAuthor());
+			article.setPublishtime(article_db.getPublishtime());
 		}
 		articleRepository.save(article);
 		return ResponseData.buildSuccessResponse(article, "保存成功");
