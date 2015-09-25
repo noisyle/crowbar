@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.LocaleContextResolver;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,6 +43,7 @@ public class WebExceptionResolver implements HandlerExceptionResolver {
             model.setView(view);
             view.setAttributesMap(map);
         } else {
+        	response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             model.setViewName("error/500");
             model.addObject("e", ex);
         }
