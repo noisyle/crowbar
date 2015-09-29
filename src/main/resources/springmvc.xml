@@ -18,11 +18,14 @@
 	
 	<mvc:annotation-driven />
 	<context:component-scan base-package="com.noisyle.crowbar.controller" />
-
-	<!-- 拦截器设置 -->
-	<bean id="webExceptionResolver" class="com.noisyle.crowbar.core.interceptor.WebExceptionResolver"/>
+	
+	<!-- springmvc+servlet3.0上传文件配置 -->  
+	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" /> 
 
 	<!-- Controller产生异常后通用处理 -->
+	<bean id="webExceptionResolver" class="com.noisyle.crowbar.core.interceptor.WebExceptionResolver" />
+
+	<!-- 拦截器设置 -->
 	<mvc:interceptors>
 		<!-- Controller拦截器 -->
 		<bean class="com.noisyle.crowbar.core.interceptor.WebHandlerInterceptor" />

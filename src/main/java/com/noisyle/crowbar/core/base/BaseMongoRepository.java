@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 
 import com.noisyle.crowbar.core.datatables.FormatHandler;
 import com.noisyle.crowbar.core.datatables.FormatedPage;
@@ -23,6 +24,9 @@ public class BaseMongoRepository<T extends BaseModel, ID extends Serializable> {
 	
 	@Autowired
 	protected MongoTemplate mongoTemplate;
+	
+	@Autowired
+	protected GridFsTemplate gridFsTemplate;
 	
 	protected Class<T> clazz;
 	protected static final String ID_KEY = "id";
