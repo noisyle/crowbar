@@ -86,7 +86,7 @@ public class BaseMongoRepository<T extends BaseModel, ID extends Serializable> {
 		if(pageParam.getSearch().getValue()!=null && !"".equals(pageParam.getSearch().getValue().trim())){
 			List<Criteria> criterias = new LinkedList<Criteria>();
 			for(int i=0;i<pageParam.getColumns().length;i++){
-				if(pageParam.getColumns()[i].getData()!=null){
+				if(pageParam.getColumns()[i].getData()!=null && pageParam.getColumns()[i].getData().indexOf(".")<0){
 					criterias.add(Criteria.where(pageParam.getColumns()[i].getData())
 						.regex(pageParam.getSearch().getValue()));
 				}
