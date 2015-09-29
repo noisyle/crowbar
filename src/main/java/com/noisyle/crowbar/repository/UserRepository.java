@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSFile;
 import com.noisyle.crowbar.core.base.BaseMongoRepository;
 import com.noisyle.crowbar.core.exception.GeneralException;
@@ -17,12 +18,11 @@ import com.noisyle.crowbar.model.User;
 
 @Repository
 public class UserRepository extends BaseMongoRepository<User, String> {
-	
+
 	public User getUserByLoginName(String loginname) {
 		User user = null;
-		if(loginname!=null && !"".equals(loginname.trim())){
-			Criteria criteria = Criteria.where("loginname").is(loginname);
-			Query query = new Query(criteria);
+		if (loginname != null && !"".equals(loginname.trim())) {
+			Query query = Query.query(Criteria.where("loginname").is(loginname));
 			user = mongoTemplate.findOne(query, User.class);
 		}
 		return user;
@@ -39,5 +39,9 @@ public class UserRepository extends BaseMongoRepository<User, String> {
 		} catch (IOException e) {
 			throw new GeneralException("上传失败", e);
 		}
+	}
+
+	public GridFSDBFile getAvatar(String id) {
+		return gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(id)));
 	}
 }

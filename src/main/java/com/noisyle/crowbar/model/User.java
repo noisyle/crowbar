@@ -11,6 +11,7 @@ public class User extends BaseModel implements IUser {
 	private String phone;
 	private String email;
 	private String role;
+	private String avatarId;
 	
 	public String getLoginname() {
 		return loginname;
@@ -47,5 +48,11 @@ public class User extends BaseModel implements IUser {
 	}
 	public void setRole(String role) {
 		this.role = role;
+	}
+	public String getAvatarId() {
+		return avatarId;
+	}
+	public void setAvatarId(String avatarId) {
+		this.avatarId = avatarId;
 	}
 }

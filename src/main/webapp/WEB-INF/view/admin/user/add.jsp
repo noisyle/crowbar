@@ -49,7 +49,7 @@
 		                        <div class="form-group">
 		                            <label for="phone" class="col-sm-4 control-label">联系电话</label>
 		                            <div class="col-sm-8">
-		                                <input class="form-control" id="phone" name="phone">
+		                                <input type="tel" class="form-control" id="phone" name="phone">
 		                            </div>
 		                        </div>
 		                    </div>
@@ -69,6 +69,7 @@
 		                            <div class="col-sm-8">
 		                                <div id="fileList" class="uploader-list"></div>
                                         <div id="filePicker">选择图片</div>
+		                                <input type="hidden" id="avatarId" name="avatarId">
 		                            </div>
 		                        </div>
 		                    </div>
@@ -119,7 +120,7 @@ $(function() {
 	    // swf文件路径
 	    swf: '${ctx}/static/webuploader/Uploader.swf',
 	    // 文件接收服务端。
-	    server: '${ctx}/admin/uploadUserAvatar',
+	    server: '${ctx}/admin/avatar',
 	    // 选择文件的按钮。可选。
 	    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
 	    pick: '#filePicker',
@@ -128,6 +129,23 @@ $(function() {
 	        title: 'Images',
 	        extensions: 'gif,jpg,jpeg,bmp,png',
 	        mimeTypes: 'image/*'
+	    },
+	    compress: {
+	        width: 100,
+	        height: 100,
+	        // 图片质量，只有type为`image/jpeg`的时候才有效。
+	        quality: 90,
+	        // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
+	        allowMagnify: false,
+	        // 是否允许裁剪。
+	        crop: true,
+	        // 是否保留头部meta信息。
+	        preserveHeaders: true,
+	        // 如果发现压缩后文件大小比原来还大，则使用原来图片
+	        // 此属性可能会影响图片自动纠正功能
+	        noCompressIfLarger: false,
+	        // 单位字节，如果图片大小小于此值，不会采用压缩。
+	        compressSize: 0
 	    }
 	});
 	var $list = $('#fileList');
@@ -138,12 +156,12 @@ $(function() {
 	    var $li = $(
 	            '<div id="' + file.id + '" class="file-item thumbnail">' +
 	                '<img>' +
-	                '<div class="info">' + file.name + '</div>' +
 	            '</div>'
 	            ),
 	        $img = $li.find('img');
 	    // $list为容器jQuery实例
-	    $list.append( $li );
+// 	    $list.append( $li );
+	    $list.html( $li );
 	    // 创建缩略图
 	    // 如果为非图片文件，可以不用调用此方法。
 	    // thumbnailWidth x thumbnailHeight 为 100 x 100
@@ -169,9 +187,19 @@ $(function() {
 
 	    $percent.css( 'width', percentage * 100 + '%' );
 	});
+	// 根据服务器返回标识判断上传是否成功。
+	uploader.on( 'uploadAccept', function( obj, res ) {
+	    if ( res.status != "SUCCESS" ) {
+	        // 通过return false来告诉组件，此文件上传有错。
+	        return false;
+	    }
+		obj.file.realid = res.data;
+	    return true;
+	});
 	// 文件上传成功，给item添加成功class, 用样式标记上传成功。
 	uploader.on( 'uploadSuccess', function( file ) {
 	    $( '#'+file.id ).addClass('upload-state-done');
+	    $('#avatarId').val(file.realid);
 	});
 	// 文件上传失败，显示上传出错。
 	uploader.on( 'uploadError', function( file ) {

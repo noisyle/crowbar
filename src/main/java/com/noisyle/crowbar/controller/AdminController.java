@@ -1,6 +1,9 @@
 package com.noisyle.crowbar.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -8,9 +11,11 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSFile;
 import com.noisyle.crowbar.constant.AdminConstant;
 import com.noisyle.crowbar.core.base.BaseController;
@@ -114,11 +120,27 @@ public class AdminController extends BaseController {
 		return ResponseData.buildSuccessResponse(user, "保存成功");
 	}
 	
-	@RequestMapping(value="/uploadUserAvatar", method=RequestMethod.POST)
+	@RequestMapping(value="/avatar", method=RequestMethod.POST)
 	@ResponseBody
 	public Object uploadUserAvatar(MultipartFile file) {
 		GridFSFile gridFSFile = userRepository.uploadAvatar(file);
 		return ResponseData.buildSuccessResponse(gridFSFile.getId().toString(), "上传成功");
+	}
+	
+	@RequestMapping(value="/avatar/{id}", method=RequestMethod.GET)
+	public void getUserAvatar(@PathVariable String id, HttpServletResponse response) {
+		GridFSDBFile file = userRepository.getAvatar(id);
+		if(file!=null){
+			response.setContentType(file.getContentType());
+			response.setContentLength((new Long(file.getLength()).intValue()));
+			try {
+				file.writeTo(response.getOutputStream());
+			} catch (IOException e) {
+				response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			}
+		}else{
+			response.setStatus(HttpStatus.NOT_FOUND.value());
+		}
 	}
 	
 	@RequestMapping(value="/deluser", method=RequestMethod.POST)

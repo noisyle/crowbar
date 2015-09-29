@@ -135,7 +135,18 @@
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav">
+					<ul class="nav">
+                        <li class="sidebar-userinfo">
+							<div class="clearfix">
+								<div class="pull-left">
+									<img src="${ctx}/admin/avatar/${uctx.user.avatarId}" class="img-circle" alt="User Avatar">
+								</div>
+								<div class="pull-left info">
+									<p>${uctx.user.username}</p>
+									<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+								</div>
+							</div>
+                        </li>
                         <li class="sidebar-search">
                             <div class="input-group custom-search-form">
                                 <input type="text" class="form-control" placeholder="查询...">

@@ -6,4 +6,5 @@ public interface IUser {
 	public String getUsername();
 	public String getPassword();
 	public String getRole();
+	public String getAvatarId();
 }
