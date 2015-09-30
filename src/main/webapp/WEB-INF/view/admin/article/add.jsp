@@ -99,8 +99,7 @@ $(function() {
     }).done(function(data) { if(data.length) $("#categoryId").select2("data", data[0]); });
 
 	$('#content').summernote({
-		tabsize: 2,
-		height: 200
+		height: 300
 	});
 	
 	$("form").submit(function(){

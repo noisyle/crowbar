@@ -57,6 +57,7 @@
 	
 	<!-- Summernote - Super Simple WYSIWYG Editor on Bootstrap -->
 	<script src="${ctx}/static/summernote/summernote.min.js"></script>
+	<script src="${ctx}/static/summernote/plugin/summernote-ext-video.js"></script>
 	
 	<script src="${ctx}/static/utils.js"></script>
 </head>

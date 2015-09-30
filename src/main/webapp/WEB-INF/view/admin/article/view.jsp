@@ -103,8 +103,7 @@ $(function() {
 	});
 	
 	$('#content').summernote({
-		tabsize: 2,
-		height: 200
+		height: 300
 	});
 	
 	$("form").submit(function(){

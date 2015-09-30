@@ -9,17 +9,18 @@ mainApp.config(['$routeProvider', function($routeProvider) {
 	.when('/contact', {templateUrl: 'contact', controller: 'ContactController'})
 	.otherwise({redirectTo: '/'});
 }]);
-mainApp.filter('unsafe', function(){
+mainApp.filter('unsafe', ['$sce', function($sce){
     return function(text){
+    	if(!text) return text;
 		var s = text.replace(/&lt;/g, '<')
 			.replace(/&gt;/g, '>')
 			.replace(/&#40;/g, '(')
 			.replace(/&#41;/g, ')')
 			.replace(/&#39;/g, '\'')
 			.replace(/&quot;/g, '"');
-		return s;
+		return $sce.trustAsHtml(s);
     }
-});
+}]);
 mainApp.controller('HomeController', function($scope, $http) {
 	$http.get("home/articles").success(function(r){
 		$scope.articles = r;
