@@ -12,7 +12,7 @@
 	    <div class="col-lg-12">
 	        <div class="panel panel-default">
 	            <div class="panel-heading">
-	            	<div class="panel-title">用户信息</div>
+	            	<div class="panel-title">文章信息</div>
 	            </div><!-- /.panel-heading -->
 	            <div class="panel-body">
                     <form role="form" class="form-horizontal">
@@ -30,6 +30,16 @@
 		                            <label for="subtitle" class="col-sm-4 control-label">副标题</label>
 		                            <div class="col-sm-8">
 		                                <input class="form-control" id="subtitle" name="subtitle" required>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="row">
+		                    <div class="col-sm-12">
+		                        <div class="form-group">
+		                            <label for="content" class="col-sm-2 control-label">栏目</label>
+		                            <div class="col-sm-10">
+		                                <input type="hidden" class="form-control" id="categoryId" name="categoryId" required>
 		                            </div>
 		                        </div>
 		                    </div>
@@ -61,6 +71,33 @@
 
 <script>
 $(function() {
+	$("#categoryId").select2({
+	    placeholder: "选择一个栏目",
+	    minimumInputLength: 0,
+	    ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+	        url: "${ctx}/admin/categorys",
+	        dataType: 'json',
+	        quietMillis: 250,
+	        data: function (term, page) {
+	            return {
+	                q: term, // search term
+	            };
+	        },
+	        results: function (data, page) { // parse the results into the format expected by Select2.
+	            // since we are using custom formatting functions we do not need to alter the remote JSON data
+	            return { results: data };
+	        },
+	        cache: true
+	    },
+	    formatResult: function (row) { return row.categoryName }, // omitted for brevity, see the source of this page
+	    formatSelection: function (row) { return row.categoryName },  // omitted for brevity, see the source of this page
+	    escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
+	});
+	
+    $.ajax("${ctx}/admin/categorys", {
+        dataType: "json"
+    }).done(function(data) { if(data.length) $("#categoryId").select2("data", data[0]); });
+	
 	$("form").submit(function(){
 		$.ajax({
 			url:"${ctx}/admin/savearticle",

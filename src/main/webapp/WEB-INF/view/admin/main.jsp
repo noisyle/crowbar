@@ -135,11 +135,16 @@
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
-					<ul class="nav">
+					<ul class="nav" id="side-header">
                         <li class="sidebar-userinfo">
 							<div class="clearfix">
 								<div class="pull-left">
+								<c:if test="${uctx.user.avatarId != null}">
 									<img src="${ctx}/admin/avatar/${uctx.user.avatarId}" class="img-circle" alt="User Avatar">
+								</c:if>
+								<c:if test="${uctx.user.avatarId == null}">
+									<img src="${ctx}/static/site/img/admin/avatar.jpg" class="img-circle" alt="User Avatar">
+								</c:if>
 								</div>
 								<div class="pull-left info">
 									<p>${uctx.user.username}</p>

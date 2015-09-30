@@ -25,6 +25,7 @@
 		                  <th>标题</th>
 		                  <th>副标题</th>
 		                  <th>作者</th>
+		                  <th>栏目</th>
 		                  <th>发布时间</th>
 		                  <th></th>
 		                </tr>
@@ -48,6 +49,7 @@ $(function() {
 			{data : "title"},
 			{data : "subtitle"},
 			{data : "author.username"},
+			{data : "category.categoryName"},
 			{data : "publishtime", type: "date"},
 			{data : "id"}
 		],

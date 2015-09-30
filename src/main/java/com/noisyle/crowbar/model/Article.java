@@ -13,6 +13,8 @@ public class Article extends BaseModel {
 	private String content;
 	@DBRef
 	private User author;
+	@DBRef
+	private Category category;
 	private Date publishtime;
 	
 	public String getTitle() {
@@ -38,6 +40,12 @@ public class Article extends BaseModel {
 	}
 	public void setAuthor(User author) {
 		this.author = author;
+	}
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	public Date getPublishtime() {
 		return publishtime;

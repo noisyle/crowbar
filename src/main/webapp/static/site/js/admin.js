@@ -42,7 +42,8 @@ $(function() {
             	$("#side-menu").css("height", "auto");
             }else{
             	$("#page-wrapper").css("height", (height) + "px");
-            	$("#side-menu").css("height", (height - 65) + "px");
+            	var h_sideheader = $("#side-header").outerHeight();
+            	$("#side-menu").css("height", (height - h_sideheader) + "px");
             }
         }
     });

@@ -38,6 +38,16 @@
 		                <div class="row">
 		                    <div class="col-sm-12">
 		                        <div class="form-group">
+		                            <label for="content" class="col-sm-2 control-label">栏目</label>
+		                            <div class="col-sm-10">
+		                                <input type="hidden" class="form-control" id="categoryId" name="categoryId" value="${article.category.id}" data-text="${article.category.categoryName}" required>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="row">
+		                    <div class="col-sm-12">
+		                        <div class="form-group">
 		                            <label for="content" class="col-sm-2 control-label">正文</label>
 		                            <div class="col-sm-10">
 		                                <textarea class="form-control" rows="3" id="content" name="content" required>${article.content}</textarea>
@@ -62,6 +72,36 @@
 
 <script>
 $(function() {
+	$("#categoryId").select2({
+	    placeholder: "选择一个栏目",
+	    minimumInputLength: 0,
+	    ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+	        url: "${ctx}/admin/categorys",
+	        dataType: 'json',
+	        quietMillis: 250,
+	        data: function (term, page) {
+	            return {
+	                q: term, // search term
+	            };
+	        },
+	        results: function (data, page) { // parse the results into the format expected by Select2.
+	            // since we are using custom formatting functions we do not need to alter the remote JSON data
+	            return { results: data };
+	        },
+	        cache: true
+	    },
+	    initSelection: function(element, callback) {
+	        var id = $(element).val();
+	        var text = $(element).data("text");
+	        if (id !== "") {
+	        	callback({id: id, categoryName: text});
+	        }
+	    },
+	    formatResult: function (row) { return row.categoryName }, // omitted for brevity, see the source of this page
+	    formatSelection: function (row) { return row.categoryName },  // omitted for brevity, see the source of this page
+	    escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
+	});
+	
 	$("form").submit(function(){
 		$.ajax({
 			url:"${ctx}/admin/savearticle",

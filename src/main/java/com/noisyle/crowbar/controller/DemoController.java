@@ -3,6 +3,7 @@ package com.noisyle.crowbar.controller;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.noisyle.crowbar.constant.AdminConstant.Role;
 import com.noisyle.crowbar.core.base.BaseController;
 import com.noisyle.crowbar.core.util.CryptoUtils;
+import com.noisyle.crowbar.model.Article;
 import com.noisyle.crowbar.model.Category;
 import com.noisyle.crowbar.model.User;
 
@@ -18,6 +20,8 @@ import com.noisyle.crowbar.model.User;
 public class DemoController extends BaseController {
 	@Autowired
 	private MongoTemplate mongoTemplate;
+	@Autowired
+	protected GridFsTemplate gridFsTemplate;
 	
 	@RequestMapping(value="/init", produces="text/plain;charset=UTF-8")
 	@ResponseBody
@@ -52,6 +56,9 @@ public class DemoController extends BaseController {
 		}
 		
 		mongoTemplate.dropCollection(Category.class);
+		Category cat0 = new Category();
+		cat0.setCategoryName("未分类");
+		mongoTemplate.save(cat0);
 		Category cat1 = new Category();
 		cat1.setCategoryName("栏目1");
 		mongoTemplate.save(cat1);
@@ -74,6 +81,9 @@ public class DemoController extends BaseController {
 		cat22.setParentId(cat2.getId());
 		cat22.setCategoryName("栏目2-2");
 		mongoTemplate.save(cat22);
+
+		mongoTemplate.dropCollection(Article.class);
+		gridFsTemplate.delete(null);
 		
 		return "初始化成功";
 	}

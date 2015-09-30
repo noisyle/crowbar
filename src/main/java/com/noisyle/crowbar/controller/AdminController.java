@@ -1,6 +1,7 @@
 package com.noisyle.crowbar.controller;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,7 +10,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -157,10 +157,10 @@ public class AdminController extends BaseController {
 		return "admin/category/list";
 	}
 	
-	@RequestMapping(value="/categorylist", method=RequestMethod.POST)
+	@RequestMapping(value="/categorys", method=RequestMethod.GET)
 	@ResponseBody
-	public Object querCategoryList() {
-		return categoryRepository.findAll();
+	public Object querCategoryList(@RequestParam(required=false) String q) {
+		return categoryRepository.querCategoryList(q);
 	}
 	
 	@RequestMapping(value="/savecategory", method=RequestMethod.POST)
@@ -206,9 +206,11 @@ public class AdminController extends BaseController {
 	
 	@RequestMapping(value="/savearticle", method=RequestMethod.POST)
 	@ResponseBody
-	public Object saveArticle(Article article) {
+	public Object saveArticle(Article article, String categoryId) {
+		Category category = categoryRepository.findById(categoryId);
+		article.setCategory(category);
 		if(article.getId()==null){
-			article.setPublishtime(LocalDate.now().toDate());
+			article.setPublishtime(new Date());
 			article.setAuthor((User) ((UserContext) SecurityUtils.getSubject().getSession().getAttribute("uctx")).getUser());
 		}else{
 			Article article_db = articleRepository.findById(article.getId());

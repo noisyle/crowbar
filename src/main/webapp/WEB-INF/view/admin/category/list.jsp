@@ -130,8 +130,8 @@ function loadForm(event, treeId, treeNode){
 
 function initTree(){
 	$.ajax({
-		url:"${ctx}/admin/categorylist",
-		method:"post",
+		url:"${ctx}/admin/categorys",
+		method:"get",
 		dataType:"json",
 		success:function(r){
 			ztree = $.fn.zTree.init($("#categoryTree"), ztree_setting, r);
