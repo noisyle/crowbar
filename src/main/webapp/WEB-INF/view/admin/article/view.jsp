@@ -36,10 +36,10 @@
 		                    </div>
 		                </div>
 		                <div class="row">
-		                    <div class="col-sm-12">
+		                    <div class="col-sm-6">
 		                        <div class="form-group">
-		                            <label for="content" class="col-sm-2 control-label">栏目</label>
-		                            <div class="col-sm-10">
+		                            <label for="content" class="col-sm-4 control-label">栏目</label>
+		                            <div class="col-sm-8">
 		                                <input type="hidden" class="form-control" id="categoryId" name="categoryId" value="${article.category.id}" data-text="${article.category.categoryName}" required>
 		                            </div>
 		                        </div>
