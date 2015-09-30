@@ -25,6 +25,9 @@
 	<!-- webuploader -->
 	<link href="${ctx}/static/webuploader/webuploader.css" rel="stylesheet">
 	
+	<!-- Summernote - Super Simple WYSIWYG Editor on Bootstrap -->
+	<link href="${ctx}/static/summernote/summernote.css" rel="stylesheet">
+	
 	<!-- custom style -->
 	<link href="${ctx}/static/site/css/admin.css" rel="stylesheet">
 
@@ -51,6 +54,9 @@
 	
 	<!-- webuploader -->
 	<script src="${ctx}/static/webuploader/webuploader.min.js"></script>
+	
+	<!-- Summernote - Super Simple WYSIWYG Editor on Bootstrap -->
+	<script src="${ctx}/static/summernote/summernote.min.js"></script>
 	
 	<script src="${ctx}/static/utils.js"></script>
 </head>

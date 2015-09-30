@@ -102,6 +102,11 @@ $(function() {
 	    escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
 	});
 	
+	$('#content').summernote({
+		tabsize: 2,
+		height: 200
+	});
+	
 	$("form").submit(function(){
 		$.ajax({
 			url:"${ctx}/admin/savearticle",

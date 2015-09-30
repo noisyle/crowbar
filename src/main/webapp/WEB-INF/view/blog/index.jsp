@@ -103,39 +103,11 @@
 
 	<script src="${ctx}/static/angular/angular.min.js"></script>
 	<script src="${ctx}/static/angular/angular-route.min.js"></script>
+	<script src="${ctx}/static/angular/angular-sanitize.min.js"></script>
 	<script src="${ctx}/static/jquery/jquery-1.11.2.min.js"></script>
 	<script src="${ctx}/static/bootstrap/js/bootstrap.min.js"></script>
+	<script src="${ctx}/static/site/js/blog.js"></script>
 
-	<script>
-	var mainApp = angular.module("mainApp", ['ngRoute']);
-	mainApp.filter("trustHtml",function($sce){
-		return function (input){
-			return $sce.trustAsHtml(input); 
-		} 
-	});
-	mainApp.config(['$routeProvider', function($routeProvider) {
-	  $routeProvider
-		.when('/', {templateUrl: 'home', controller: 'HomeController'})
-		.when('/article/:id', {templateUrl: 'article', controller: 'ArticleController'})
-		.when('/about', {templateUrl: 'about', controller: 'AboutController'})
-		.when('/contact', {templateUrl: 'contact', controller: 'ContactController'})
-		.otherwise({redirectTo: '/'});
-	}]);
-	mainApp.controller('HomeController', function($scope, $http) {
-		$http.get("home/articles").success(function(r){
-			$scope.articles = r;
-		});
-	});
-	mainApp.controller('ArticleController', function($scope, $http, $routeParams) {
-		$http.get("article/"+$routeParams.id).success(function(r){
-			$scope.article = r;
-		});
-	});
-	mainApp.controller('AboutController', function($scope, $http) {
-	});
-	mainApp.controller('ContactController', function($scope, $http) {
-	});
-	</script>
 </body>
 
 </html>

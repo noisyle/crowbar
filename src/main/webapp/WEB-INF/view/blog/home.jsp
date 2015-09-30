@@ -23,8 +23,8 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-preview" ng-repeat="article in articles">
                     <a href="#/article/{{article.id}}">
-                        <h2 class="post-title" ng-bind-html="article.title|trustHtml"></h2>
-                        <h3 class="post-subtitle" ng-bind-html="article.subtitle|trustHtml"></h3>
+                        <h2 class="post-title" ng-bind-html="article.title"></h2>
+                        <h3 class="post-subtitle" ng-bind-html="article.subtitle"></h3>
                     </a>
                     <p class="post-meta">由 <a href="#">{{article.author.username}}</a> 发表于 {{article.publishtime | date : 'yyyy-MM-dd hh:mm:ss'}}</p>
 	                <hr>

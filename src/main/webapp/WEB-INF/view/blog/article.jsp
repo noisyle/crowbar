@@ -8,8 +8,8 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="post-heading">
-                        <h1 ng-bind-html="article.title|trustHtml"></h1>
-                        <h2 class="subheading" ng-bind-html="article.subtitle|trustHtml"></h2>
+                        <h1 ng-bind-html="article.title"></h1>
+                        <h2 class="subheading" ng-bind-html="article.subtitle"></h2>
                         <span class="meta">由 <a href="#">{{article.author.username}}</a> 发表于 {{article.publishtime | date : 'yyyy-MM-dd hh:mm:ss'}}</span>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
     <article>
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" ng-bind-html="article.content|trustHtml">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" ng-bind-html="article.content | unsafe">
                 </div>
             </div>
         </div>

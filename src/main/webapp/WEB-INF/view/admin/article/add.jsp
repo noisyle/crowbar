@@ -49,7 +49,7 @@
 		                        <div class="form-group">
 		                            <label for="content" class="col-sm-2 control-label">正文</label>
 		                            <div class="col-sm-10">
-		                                <textarea class="form-control" rows="3" id="content" name="content" required></textarea>
+		                                <textarea class="form-control" id="content" name="content" required></textarea>
 		                            </div>
 		                        </div>
 		                    </div>
@@ -97,6 +97,11 @@ $(function() {
     $.ajax("${ctx}/admin/categorys", {
         dataType: "json"
     }).done(function(data) { if(data.length) $("#categoryId").select2("data", data[0]); });
+
+	$('#content').summernote({
+		tabsize: 2,
+		height: 200
+	});
 	
 	$("form").submit(function(){
 		$.ajax({
