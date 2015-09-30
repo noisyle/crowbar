@@ -108,6 +108,11 @@
 
 	<script>
 	var mainApp = angular.module("mainApp", ['ngRoute']);
+	mainApp.filter("trustHtml",function($sce){
+		return function (input){
+			return $sce.trustAsHtml(input); 
+		} 
+	});
 	mainApp.config(['$routeProvider', function($routeProvider) {
 	  $routeProvider
 		.when('/', {templateUrl: 'home', controller: 'HomeController'})
