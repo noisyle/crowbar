@@ -83,7 +83,7 @@ public class BaseMongoRepository<T extends BaseModel, ID extends Serializable> {
 	public Page<T> getPage(PageParam pageParam) {
 		Query query = new Query();
 		// 处理过滤查询条件
-		if(pageParam.getSearch().getValue()!=null && !"".equals(pageParam.getSearch().getValue().trim())){
+		if(pageParam.getSearch() !=null && pageParam.getSearch().getValue()!=null && !"".equals(pageParam.getSearch().getValue().trim())){
 			List<Criteria> criterias = new LinkedList<Criteria>();
 			for(int i=0;i<pageParam.getColumns().length;i++){
 				if(pageParam.getColumns()[i].getData()!=null && pageParam.getColumns()[i].getData().indexOf(".")<0){
