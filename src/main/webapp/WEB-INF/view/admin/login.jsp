@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -34,25 +35,25 @@ if(window.parent!=window){
         <div class="center-block" style="max-width:300px;">
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">登录</h3>
+                    <h3 class="panel-title"><spring:message code="login.boxTitle" /></h3>
                 </div>
                 <div class="panel-body">
                     <form role="form">
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="用户名" name="loginname" type="text" value="admin1" autofocus />
+                                <input class="form-control" placeholder="<spring:message code="login.username" />" name="loginname" type="text" value="admin1" autofocus />
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder="密码" name="password" type="password" value="123456" />
+                                <input class="form-control" placeholder="<spring:message code="login.password" />" name="password" type="password" value="123456" />
                             </div>
                             <div class="alert alert-danger" id="msg" style="display:none; padding:5px 15px;"></div>
                             <div class="checkbox">
                                 <label>
-                                    <input name="remember" type="checkbox" value="Remember Me">记住密码
+                                    <input name="remember" type="checkbox" value="Remember Me"><spring:message code="login.remember" />
                                 </label>
                             </div>
                             <!-- Change this to a button or input when using this as a form -->
-                            <a href="#" role="button" class="btn btn-lg btn-primary btn-block">登录</a>
+                            <a href="#" role="button" class="btn btn-lg btn-primary btn-block"><spring:message code="login.btnLogin" /></a>
                         </fieldset>
                     </form>
                 </div>

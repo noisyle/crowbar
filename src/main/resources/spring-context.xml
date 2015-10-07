@@ -48,6 +48,7 @@
 				<value>i18n/message</value>
 			</list>
 		</property>
+		<property name="useCodeAsDefaultMessage" value="true" />
 	</bean>
 	<!-- 基于Cookie的本地化解析器 -->
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
