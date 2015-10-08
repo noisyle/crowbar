@@ -392,6 +392,11 @@ table.dataTable thead .sorting:after {
     color: #df8a13;
 }
 
+/*! custom bootstrap page-header */
+.page-header {
+	margin: 20px 0 10px 0;
+}
+
 /*! custom bootstrap panel */
 .panel-heading {
 	padding-top: 5px;

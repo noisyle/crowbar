@@ -104,21 +104,21 @@ $(function() {
 	
 	$("form").submit(function(){
 		$.ajax({
-			url:"${ctx}/admin/savearticle",
+			url:"${ctx}/admin/saveArticle",
 			method:"post",
 			data:$("form").serializeObject(),
 			dataType:"json",
 			success:function(r){
 				alert(r.message);
 				if(r.status=="SUCCESS"){
-					window.location.href="${ctx}/admin/articlelist";
+					window.location.href="${ctx}/admin/articleList";
 				}
 			}
 		});
 		return false;
 	});
 	$("#btnBack").on("click", function(){
-		window.location.href="${ctx}/admin/articlelist";
+		window.location.href="${ctx}/admin/articleList";
 	});
 });
 </script>

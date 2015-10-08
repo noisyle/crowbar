@@ -82,12 +82,12 @@ public class AdminController extends BaseController {
 	
 	
 	// 用户管理
-	@RequestMapping(value="/userlist", method=RequestMethod.GET)
+	@RequestMapping(value="/userList", method=RequestMethod.GET)
 	public String userList() {
 		return "admin/user/list";
 	}
 	
-	@RequestMapping(value="/userlist", method=RequestMethod.POST)
+	@RequestMapping(value="/userList", method=RequestMethod.POST)
 	@ResponseBody
 	public Object querUserList(@RequestBody PageParam pageParam) {
 		pageParam.getColumns()[2].setFormatter(new IFormatter() {
@@ -99,20 +99,20 @@ public class AdminController extends BaseController {
 		return userRepository.getFormatedPage(pageParam);
 	}
 	
-	@RequestMapping(value="/adduser", method=RequestMethod.GET)
+	@RequestMapping(value="/addUser", method=RequestMethod.GET)
 	public String addUser(Model model) {
 		model.addAttribute("json_role", AdminConstant.Role.getJSONString(0));
 		return "admin/user/add";
 	}
 	
-	@RequestMapping(value="/viewuser", method=RequestMethod.GET)
+	@RequestMapping(value="/viewUser", method=RequestMethod.GET)
 	public String viewUser(Model model, @RequestParam String id) {
 		model.addAttribute("user", userRepository.findById(id));
 		model.addAttribute("json_role", AdminConstant.Role.getJSONString(0));
 		return "admin/user/view";
 	}
 	
-	@RequestMapping(value="/saveuser", method=RequestMethod.POST)
+	@RequestMapping(value="/saveUser", method=RequestMethod.POST)
 	@ResponseBody
 	public Object saveUser(User user) {
 		user.setPassword(CryptoUtils.md5("123456"));
@@ -120,15 +120,15 @@ public class AdminController extends BaseController {
 		return ResponseData.buildSuccessResponse(user, "保存成功");
 	}
 	
-	@RequestMapping(value="/avatar", method=RequestMethod.POST)
+	@RequestMapping(value="/uploadAvatar", method=RequestMethod.POST)
 	@ResponseBody
-	public Object uploadUserAvatar(MultipartFile file) {
+	public Object uploadAvatar(MultipartFile file) {
 		GridFSFile gridFSFile = userRepository.uploadAvatar(file);
 		return ResponseData.buildSuccessResponse(gridFSFile.getId().toString(), "上传成功");
 	}
 	
 	@RequestMapping(value="/avatar/{id}", method=RequestMethod.GET)
-	public void getUserAvatar(@PathVariable String id, HttpServletResponse response) {
+	public void getAvatar(@PathVariable String id, HttpServletResponse response) {
 		GridFSDBFile file = userRepository.getAvatar(id);
 		if(file!=null){
 			response.setContentType(file.getContentType());
@@ -143,7 +143,7 @@ public class AdminController extends BaseController {
 		}
 	}
 	
-	@RequestMapping(value="/deluser", method=RequestMethod.POST)
+	@RequestMapping(value="/delUser", method=RequestMethod.POST)
 	@ResponseBody
 	public Object delUser(User user) {
 		userRepository.delete(user.getId());
@@ -152,7 +152,7 @@ public class AdminController extends BaseController {
 	
 	
 	//栏目管理
-	@RequestMapping(value="/categorylist", method=RequestMethod.GET)
+	@RequestMapping(value="/categoryList", method=RequestMethod.GET)
 	public String categoryList() {
 		return "admin/category/list";
 	}
@@ -163,7 +163,7 @@ public class AdminController extends BaseController {
 		return categoryRepository.querCategoryList(q);
 	}
 	
-	@RequestMapping(value="/savecategory", method=RequestMethod.POST)
+	@RequestMapping(value="/saveCategory", method=RequestMethod.POST)
 	@ResponseBody
 	public Object saveCategory(Category category) {
 		if("".equals(category.getParentId())){
@@ -173,7 +173,7 @@ public class AdminController extends BaseController {
 		return ResponseData.buildSuccessResponse(category, "保存成功");
 	}
 	
-	@RequestMapping(value="/delcategory", method=RequestMethod.POST)
+	@RequestMapping(value="/delCategory", method=RequestMethod.POST)
 	@ResponseBody
 	public Object delCategory(Category category) {
 		categoryRepository.delete(category.getId());
@@ -182,29 +182,29 @@ public class AdminController extends BaseController {
 	
 	
 	//文章管理
-	@RequestMapping(value="/articlelist", method=RequestMethod.GET)
+	@RequestMapping(value="/articleList", method=RequestMethod.GET)
 	public String articleList() {
 		return "admin/article/list";
 	}
 	
-	@RequestMapping(value="/articlelist", method=RequestMethod.POST)
+	@RequestMapping(value="/articleList", method=RequestMethod.POST)
 	@ResponseBody
 	public Object querArticleList(@RequestBody PageParam pageParam) {
 		return articleRepository.getPage(pageParam);
 	}
 	
-	@RequestMapping(value="/addarticle", method=RequestMethod.GET)
+	@RequestMapping(value="/addArticle", method=RequestMethod.GET)
 	public String addArticle(Model model) {
 		return "admin/article/add";
 	}
 	
-	@RequestMapping(value="/viewarticle", method=RequestMethod.GET)
+	@RequestMapping(value="/viewArticle", method=RequestMethod.GET)
 	public String viewArticle(Model model, @RequestParam String id) {
 		model.addAttribute("article", articleRepository.findById(id));
 		return "admin/article/view";
 	}
 	
-	@RequestMapping(value="/savearticle", method=RequestMethod.POST)
+	@RequestMapping(value="/saveArticle", method=RequestMethod.POST)
 	@ResponseBody
 	public Object saveArticle(Article article, String categoryId) {
 		Category category = categoryRepository.findById(categoryId);
@@ -221,7 +221,7 @@ public class AdminController extends BaseController {
 		return ResponseData.buildSuccessResponse(article, "保存成功");
 	}
 	
-	@RequestMapping(value="/delarticle", method=RequestMethod.POST)
+	@RequestMapping(value="/delArticle", method=RequestMethod.POST)
 	@ResponseBody
 	public Object delArticle(Article article) {
 		articleRepository.delete(article.getId());

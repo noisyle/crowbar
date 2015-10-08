@@ -103,21 +103,21 @@ $(function() {
 	
 	$("form").submit(function(){
 		$.ajax({
-			url:"${ctx}/admin/saveuser",
+			url:"${ctx}/admin/saveUser",
 			method:"post",
 			data:$("form").serializeObject(),
 			dataType:"json",
 			success:function(r){
 				alert(r.message);
 				if(r.status=="SUCCESS"){
-					window.location.href="${ctx}/admin/userlist";
+					window.location.href="${ctx}/admin/userList";
 				}
 			}
 		});
 		return false;
 	});
 	$("#btnBack").on("click", function(){
-		window.location.href="${ctx}/admin/userlist";
+		window.location.href="${ctx}/admin/userList";
 	});
 	
 	// 初始化Web Uploader
@@ -127,7 +127,7 @@ $(function() {
 	    // swf文件路径
 	    swf: '${ctx}/static/webuploader/Uploader.swf',
 	    // 文件接收服务端。
-	    server: '${ctx}/admin/avatar',
+	    server: '${ctx}/admin/uploadAvatar',
 	    // 选择文件的按钮。可选。
 	    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
 	    pick: '#filePicker',

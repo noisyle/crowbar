@@ -86,7 +86,7 @@ $(function() {
 	
 	$("form").submit(function(){
 		$.ajax({
-			url:"${ctx}/admin/savecategory",
+			url:"${ctx}/admin/saveCategory",
 			method:"post",
 			data:$("form").serializeObject(),
 			dataType:"json",
@@ -161,7 +161,7 @@ function addSub(){
 
 function del(){
 	$.ajax({
-		url:"${ctx}/admin/delcategory",
+		url:"${ctx}/admin/delCategory",
 		method:"post",
 		data:$("form").serializeObject(),
 		dataType:"json",

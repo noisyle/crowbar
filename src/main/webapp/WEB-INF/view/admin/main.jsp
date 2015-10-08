@@ -166,13 +166,13 @@
                     </ul>
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="${ctx}/admin/userlist"><i class="fa fa-users fa-fw"></i> 用户信息管理</a>
+                            <a href="${ctx}/admin/userList"><i class="fa fa-users fa-fw"></i> 用户信息管理</a>
                         </li>
                         <li>
-                            <a href="${ctx}/admin/categorylist"><i class="fa fa-th-list fa-fw"></i> 栏目管理</a>
+                            <a href="${ctx}/admin/categoryList"><i class="fa fa-th-list fa-fw"></i> 栏目管理</a>
                         </li>
                         <li>
-                            <a href="${ctx}/admin/articlelist"><i class="fa fa-file-text fa-fw"></i> 文章管理</a>
+                            <a href="${ctx}/admin/articleList"><i class="fa fa-file-text fa-fw"></i> 文章管理</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>

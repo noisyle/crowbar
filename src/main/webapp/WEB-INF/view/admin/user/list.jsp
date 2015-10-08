@@ -42,7 +42,7 @@ var table;
 $(function() {
 	table = $('#table').DataTable({
 		ajax : {
-			url: '${ctx}/admin/userlist'
+			url: '${ctx}/admin/userList'
 		},
 		serverSide: true,
 		columns : [
@@ -65,7 +65,7 @@ $(function() {
 	});
 	
 	$("#btnAdd").on("click", function(){
-		window.location.href="${ctx}/admin/adduser";
+		window.location.href="${ctx}/admin/addUser";
 	});
 	
 	$("#btnReload").on("click", function(){
@@ -75,12 +75,12 @@ $(function() {
 });
 
 function view(id){
-	window.location.href="${ctx}/admin/viewuser?id="+id;
+	window.location.href="${ctx}/admin/viewUser?id="+id;
 }
 
 function del(obj){
 	$.ajax({
-		url:"${ctx}/admin/deluser",
+		url:"${ctx}/admin/delUser",
 		method:"post",
 		data:$(obj).data(),
 		dataType:"json",
