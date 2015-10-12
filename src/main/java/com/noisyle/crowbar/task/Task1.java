@@ -1,14 +1,11 @@
 package com.noisyle.crowbar.task;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.noisyle.crowbar.core.base.BaseAutoTask;
 
-public class Task1 implements Runnable {
-	private static Logger logger = LoggerFactory.getLogger(Task1.class);
-
+public class Task1 extends BaseAutoTask {
 	@Override
 	public void run() {
-		logger.debug("Task1启动");
+		logger.debug("Task1启动，参数：{}", this.parameter);
 
         logger.debug("Task1结束");
 	}

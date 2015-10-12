@@ -2,7 +2,7 @@ package com.noisyle.crowbar.core.vo;
 
 import java.util.Date;
 
-import com.noisyle.crowbar.core.auth.IUser;
+import com.noisyle.crowbar.core.base.IUser;
 
 public class UserContext {
 	private IUser user;

@@ -1,4 +1,4 @@
-package com.noisyle.crowbar.core.auth;
+package com.noisyle.crowbar.core.base;
 
 public interface IUser {
 	public String getId();

@@ -1,7 +1,7 @@
 package com.noisyle.crowbar.model;
 
-import com.noisyle.crowbar.core.auth.IUser;
 import com.noisyle.crowbar.core.base.BaseModel;
+import com.noisyle.crowbar.core.base.IUser;
 
 public class User extends BaseModel implements IUser {
 

@@ -34,9 +34,11 @@ import com.noisyle.crowbar.core.util.CryptoUtils;
 import com.noisyle.crowbar.core.vo.ResponseData;
 import com.noisyle.crowbar.core.vo.UserContext;
 import com.noisyle.crowbar.model.Article;
+import com.noisyle.crowbar.model.AutoTask;
 import com.noisyle.crowbar.model.Category;
 import com.noisyle.crowbar.model.User;
 import com.noisyle.crowbar.repository.ArticleRepository;
+import com.noisyle.crowbar.repository.AutoTaskRepository;
 import com.noisyle.crowbar.repository.CategoryRepository;
 import com.noisyle.crowbar.repository.UserRepository;
 
@@ -49,6 +51,8 @@ public class AdminController extends BaseController {
 	private CategoryRepository categoryRepository;
 	@Autowired
 	private ArticleRepository articleRepository;
+	@Autowired
+	private AutoTaskRepository autoTaskRepository;
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String login() {
@@ -226,5 +230,44 @@ public class AdminController extends BaseController {
 	public Object delArticle(Article article) {
 		articleRepository.delete(article.getId());
 		return ResponseData.buildSuccessResponse(article.getId(), "删除成功");
+	}
+	
+	
+	// 自动任务管理
+	@RequestMapping(value="/autoTaskList", method=RequestMethod.GET)
+	public String autoTaskList() {
+		return "admin/autoTask/list";
+	}
+	
+	@RequestMapping(value="/autoTaskList", method=RequestMethod.POST)
+	@ResponseBody
+	public Object querAutoTaskList(@RequestBody PageParam pageParam) {
+		return autoTaskRepository.getFormatedPage(pageParam);
+	}
+	
+	@RequestMapping(value="/addAutoTask", method=RequestMethod.GET)
+	public String addAutoTask(Model model) {
+		return "admin/autoTask/add";
+	}
+	
+	@RequestMapping(value="/viewAutoTask", method=RequestMethod.GET)
+	public String viewAutoTask(Model model, @RequestParam String id) {
+		model.addAttribute("autoTask", autoTaskRepository.findById(id));
+		return "admin/autoTask/view";
+	}
+	
+	@RequestMapping(value="/saveAutoTask", method=RequestMethod.POST)
+	@ResponseBody
+	public Object saveAutoTask(AutoTask autoTask) {
+		autoTask.setModifyTime(new Date());
+		autoTaskRepository.save(autoTask);
+		return ResponseData.buildSuccessResponse(autoTask, "保存成功");
+	}
+	
+	@RequestMapping(value="/delAutoTask", method=RequestMethod.POST)
+	@ResponseBody
+	public Object delAutoTask(AutoTask autoTask) {
+		autoTaskRepository.delete(autoTask.getId());
+		return ResponseData.buildSuccessResponse(autoTask.getId(), "删除成功");
 	}
 }
