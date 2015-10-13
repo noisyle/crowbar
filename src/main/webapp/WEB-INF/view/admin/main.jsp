@@ -8,8 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    
 	<title>XXX管理系统</title>
+	<link rel="shortcut icon" href="${ctx}/static/site/img/favicon.ico" />
 	<link href="${ctx}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="${ctx}/static/metisMenu/metisMenu.min.css" rel="stylesheet">
 	<link href="${ctx}/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -37,7 +38,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">XXX管理系统</a>
+                <a class="navbar-brand" href="#"><div style="margin-top:-4px;width:150px;"><jsp:include page="/WEB-INF/view/admin/common/logo.jsp"></jsp:include></div></a>
             </div>
             <!-- /.navbar-header -->
 
