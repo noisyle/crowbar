@@ -32,7 +32,6 @@ import com.noisyle.crowbar.core.datatables.PageParam;
 import com.noisyle.crowbar.core.exception.GeneralException;
 import com.noisyle.crowbar.core.util.CryptoUtils;
 import com.noisyle.crowbar.core.vo.ResponseData;
-import com.noisyle.crowbar.core.vo.UserContext;
 import com.noisyle.crowbar.model.Article;
 import com.noisyle.crowbar.model.AutoTask;
 import com.noisyle.crowbar.model.Category;
@@ -73,15 +72,48 @@ public class AdminController extends BaseController {
 	}
 	
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
-	public String logout(HttpServletRequest request) {
+	public String logout() {
 		SecurityUtils.getSubject().getSession().removeAttribute("uctx");
 		SecurityUtils.getSubject().logout();
 		return "admin/login";
 	}
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
-	public String main(HttpServletRequest request) {
+	public String main() {
 		return "admin/main";
+	}
+	
+	@RequestMapping(value="/changePass", method=RequestMethod.GET)
+	public String changePass() {
+		return "admin/changePass";
+	}
+	
+	@RequestMapping(value="/changePass", method=RequestMethod.POST)
+	@ResponseBody
+	public Object changePass(HttpServletRequest request) {
+		String oldPass = request.getParameter("oldPass");
+		String pass1 = request.getParameter("pass1");
+		String pass2 = request.getParameter("pass2");
+		if(oldPass==null || "".equals(oldPass.trim())
+				|| pass1==null || "".equals(pass1.trim())
+				|| pass2==null || "".equals(pass2.trim())){
+			throw new GeneralException("修改密码失败，参数不正确");
+		}
+		User user = userRepository.findById(userContext.getUser().getId());
+		if(user==null){
+			throw new GeneralException("修改密码失败，用户不存在");
+		}
+		if(!user.getPassword().equalsIgnoreCase(oldPass.trim())){
+			throw new GeneralException("修改密码失败，旧密码不正确");
+		}
+		if(!pass1.trim().equals(pass2.trim())){
+			throw new GeneralException("修改密码失败，两次新密码必须相同");
+		}
+		user.setPassword(pass1);
+		userRepository.save(user);
+		SecurityUtils.getSubject().getSession().removeAttribute("uctx");
+		SecurityUtils.getSubject().logout();
+		return ResponseData.buildSuccessResponse(null, "密码修改成功，请重新登陆");
 	}
 	
 	
@@ -215,7 +247,7 @@ public class AdminController extends BaseController {
 		article.setCategory(category);
 		if(article.getId()==null){
 			article.setPublishtime(new Date());
-			article.setAuthor((User) ((UserContext) SecurityUtils.getSubject().getSession().getAttribute("uctx")).getUser());
+			article.setAuthor((User) userContext.getUser());
 		}else{
 			Article article_db = articleRepository.findById(article.getId());
 			article.setAuthor(article_db.getAuthor());

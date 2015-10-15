@@ -3,11 +3,16 @@ package com.noisyle.crowbar.core.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
+
+import com.noisyle.crowbar.core.base.BaseController;
+import com.noisyle.crowbar.core.vo.UserContext;
 
 public class WebHandlerInterceptor implements HandlerInterceptor {
 
@@ -26,6 +31,17 @@ public class WebHandlerInterceptor implements HandlerInterceptor {
 		if(object instanceof ResourceHttpRequestHandler){
 			logger.debug("请求静态资源url:{}\nrefer:{}", url, refer);
 			return true;
+		}
+		
+		//BaseController子类，尝试注入UserContext
+		if(object instanceof HandlerMethod){
+			if(((HandlerMethod) object).getBean() instanceof BaseController){
+				BaseController controller = (BaseController) ((HandlerMethod) object).getBean();
+				UserContext userContext = (UserContext) SecurityUtils.getSubject().getSession().getAttribute("uctx");
+				if(userContext!=null){
+					controller.setUserContext(userContext);
+				}
+			}
 		}
 		
 		request.setAttribute("ctx", contextPath);
