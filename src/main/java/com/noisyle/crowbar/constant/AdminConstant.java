@@ -8,6 +8,9 @@ import java.util.Map;
 import com.noisyle.crowbar.core.util.JSONUtils;
 
 public class AdminConstant {
+	public static final String SESSION_KEY_USER_CONTEXT = "userContext";
+	public static final String SESSION_KEY_CONTEXT_ROOT = "ctx";
+	
 	public static enum Role {
 		ADMIN("管理员"),
 		USER("用户");

@@ -14,10 +14,13 @@
 		<property name="filterChainDefinitions">
 			<value>
 				/admin/login = anon
-				/admin/** = authc,roles["ADMIN"]
+				/admin/** = rememberMeFilter, roles["ADMIN"]
 			</value>
 		</property>
 	</bean>
+	
+	<!-- 自定义登录校验过滤器，优化remember me功能 -->
+	<bean id="rememberMeFilter" class="com.noisyle.crowbar.core.auth.RememberMeAuthenticationFilter" />
 
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="userRealm" />

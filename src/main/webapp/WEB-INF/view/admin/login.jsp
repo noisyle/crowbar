@@ -49,7 +49,7 @@ if(window.parent!=window){
                             <div class="alert alert-danger" id="msg" style="display:none; padding:5px 15px;"></div>
                             <div class="checkbox">
                                 <label>
-                                    <input name="remember" type="checkbox" value="Remember Me"><spring:message code="login.remember" />
+                                    <input name="rememberMe" type="checkbox"><spring:message code="login.remember" />
                                 </label>
                             </div>
                             <!-- Change this to a button or input when using this as a form -->

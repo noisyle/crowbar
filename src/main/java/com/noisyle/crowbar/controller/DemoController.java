@@ -1,5 +1,8 @@
 package com.noisyle.crowbar.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.noisyle.crowbar.constant.AdminConstant.Role;
 import com.noisyle.crowbar.core.base.BaseController;
+import com.noisyle.crowbar.core.util.CookieUtils;
 import com.noisyle.crowbar.core.util.CryptoUtils;
 import com.noisyle.crowbar.model.Article;
 import com.noisyle.crowbar.model.Category;
@@ -22,6 +26,17 @@ public class DemoController extends BaseController {
 	private MongoTemplate mongoTemplate;
 	@Autowired
 	protected GridFsTemplate gridFsTemplate;
+	
+	@RequestMapping(value="", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public Object hello(HttpServletRequest request, HttpServletResponse response) {
+		String count = CookieUtils.getCookieValue(request, "count");
+		if(count==null) count = "0";
+		count = String.valueOf(Integer.valueOf(count)+1);
+		CookieUtils.setCookieValue(request, response, "count", count, null, "/", CookieUtils.CURRENT_SESSION);
+		logger.debug("=== 第{}次请求由主机 {}:{} 处理请求", count, request.getLocalName(), request.getLocalPort());
+		return "hello world!";
+	}
 	
 	@RequestMapping(value="/init", produces="text/plain;charset=UTF-8")
 	@ResponseBody

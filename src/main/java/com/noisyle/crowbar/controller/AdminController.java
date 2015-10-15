@@ -62,7 +62,9 @@ public class AdminController extends BaseController {
 	@ResponseBody
 	public Object login(HttpServletRequest request, @ModelAttribute("user") User user) {
         try {
-        	SecurityUtils.getSubject().login(new UsernamePasswordToken(user.getLoginname(), user.getPassword()));
+        	UsernamePasswordToken token = new UsernamePasswordToken(user.getLoginname(), user.getPassword());
+        	token.setRememberMe(true);
+        	SecurityUtils.getSubject().login(token);
             return ResponseData.buildSuccessResponse(user);
         } catch (UnknownAccountException e) {
             throw new GeneralException("login.wrongUsername", user.getLoginname());
@@ -73,7 +75,7 @@ public class AdminController extends BaseController {
 	
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
 	public String logout() {
-		SecurityUtils.getSubject().getSession().removeAttribute("uctx");
+		SecurityUtils.getSubject().getSession().removeAttribute(AdminConstant.SESSION_KEY_USER_CONTEXT);
 		SecurityUtils.getSubject().logout();
 		return "admin/login";
 	}
@@ -111,7 +113,7 @@ public class AdminController extends BaseController {
 		}
 		user.setPassword(pass1);
 		userRepository.save(user);
-		SecurityUtils.getSubject().getSession().removeAttribute("uctx");
+		SecurityUtils.getSubject().getSession().removeAttribute(AdminConstant.SESSION_KEY_USER_CONTEXT);
 		SecurityUtils.getSubject().logout();
 		return ResponseData.buildSuccessResponse(null, "密码修改成功，请重新登陆");
 	}

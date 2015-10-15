@@ -11,6 +11,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
+import com.noisyle.crowbar.constant.AdminConstant;
 import com.noisyle.crowbar.core.base.BaseController;
 import com.noisyle.crowbar.core.vo.UserContext;
 
@@ -37,14 +38,14 @@ public class WebHandlerInterceptor implements HandlerInterceptor {
 		if(object instanceof HandlerMethod){
 			if(((HandlerMethod) object).getBean() instanceof BaseController){
 				BaseController controller = (BaseController) ((HandlerMethod) object).getBean();
-				UserContext userContext = (UserContext) SecurityUtils.getSubject().getSession().getAttribute("uctx");
+				UserContext userContext = (UserContext) SecurityUtils.getSubject().getSession().getAttribute(AdminConstant.SESSION_KEY_USER_CONTEXT);
 				if(userContext!=null){
 					controller.setUserContext(userContext);
 				}
 			}
 		}
 		
-		request.setAttribute("ctx", contextPath);
+		request.setAttribute(AdminConstant.SESSION_KEY_CONTEXT_ROOT, contextPath);
 		
 		logger.debug("请求url:{}\nmethod:{}\nparams:{}\nrefer:{}", url, request.getMethod(), request.getParameterMap(), refer);
 		return true;

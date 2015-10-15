@@ -9,20 +9,20 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.noisyle.crowbar.constant.AdminConstant;
 import com.noisyle.crowbar.core.base.IUser;
 import com.noisyle.crowbar.core.vo.UserContext;
-import com.noisyle.crowbar.repository.UserRepository;
+import com.noisyle.crowbar.service.LoginService;
 
 public class MongoDBUserRealm extends AuthorizingRealm {
     final protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private UserRepository userRepository;
+    private LoginService loginService;
 
     @Override
     public String getName() {
@@ -41,12 +41,10 @@ public class MongoDBUserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-        IUser user = userRepository.getUserByLoginName(token.getUsername());
+        IUser user = loginService.getUserByLoginName(token.getUsername());
         if(user != null) {
-        	UserContext uctx = new UserContext(user);
-        	uctx.setLoginTime(LocalDate.now().toDate());
-        	SecurityUtils.getSubject().getSession().setAttribute("uctx", uctx);
-            return new SimpleAuthenticationInfo(user.getId(), user.getPassword(), getName());
+        	loginService.initUserContext(user);
+            return new SimpleAuthenticationInfo(user.getLoginname(), user.getPassword(), getName());
         } else {
             return null;
         }
@@ -57,7 +55,7 @@ public class MongoDBUserRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-    	IUser user = ((UserContext) SecurityUtils.getSubject().getSession().getAttribute("uctx")).getUser();
+    	IUser user = ((UserContext) SecurityUtils.getSubject().getSession().getAttribute(AdminConstant.SESSION_KEY_USER_CONTEXT)).getUser();
     	SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
     	if(user.getRole()!=null){
     		info.addRole(user.getRole());

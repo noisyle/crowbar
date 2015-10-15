@@ -140,15 +140,15 @@
                         <li class="sidebar-userinfo">
 							<div class="clearfix">
 								<div class="pull-left">
-								<c:if test="${uctx.user.avatarId != null}">
-									<img src="${ctx}/admin/avatar/${uctx.user.avatarId}" class="img-circle" alt="User Avatar">
+								<c:if test="${userContext.user.avatarId != null}">
+									<img src="${ctx}/admin/avatar/${userContext.user.avatarId}" class="img-circle" alt="User Avatar">
 								</c:if>
-								<c:if test="${uctx.user.avatarId == null}">
+								<c:if test="${userContext.user.avatarId == null}">
 									<img src="${ctx}/static/site/img/admin/avatar.jpg" class="img-circle" alt="User Avatar">
 								</c:if>
 								</div>
 								<div class="pull-left info">
-									<p>${uctx.user.username}</p>
+									<p>${userContext.user.username}</p>
 									<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 								</div>
 							</div>
