@@ -76,6 +76,7 @@ $(function(){
 	function login(e){
 		var data = $('form').serializeObject();
 		data.password = $.md5(data.password).toUpperCase();
+		data.rememberMe = $('[name=rememberMe]').prop("checked");
 		$.ajax({
 			url:"${ctx}/admin/login",
 			method:"post",

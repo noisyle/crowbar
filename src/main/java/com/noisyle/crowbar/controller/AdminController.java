@@ -60,10 +60,10 @@ public class AdminController extends BaseController {
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	@ResponseBody
-	public Object login(HttpServletRequest request, @ModelAttribute("user") User user) {
+	public Object login(HttpServletRequest request, @ModelAttribute("user") User user, @RequestParam(required=false, defaultValue="false") boolean rememberMe) {
         try {
         	UsernamePasswordToken token = new UsernamePasswordToken(user.getLoginname(), user.getPassword());
-        	token.setRememberMe(true);
+        	token.setRememberMe(rememberMe);
         	SecurityUtils.getSubject().login(token);
             return ResponseData.buildSuccessResponse(user);
         } catch (UnknownAccountException e) {
