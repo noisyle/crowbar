@@ -3,6 +3,7 @@ package com.noisyle.crowbar.core.config;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -22,9 +23,16 @@ public class ShiroConfig {
 	}
 	
 	@Bean
-	@DependsOn({"userRealm"})
+	public MemoryConstrainedCacheManager cacheManager() {
+		return new MemoryConstrainedCacheManager();
+	}
+	
+	@Bean
+	@DependsOn({"userRealm", "cacheManager"})
 	public DefaultWebSecurityManager securityManager() {
-		return new DefaultWebSecurityManager(userRealm());
+		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager(userRealm());
+		securityManager.setCacheManager(cacheManager());
+		return securityManager;
 	}
 	
 	@Bean

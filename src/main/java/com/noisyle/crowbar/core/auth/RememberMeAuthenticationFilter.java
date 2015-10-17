@@ -35,11 +35,11 @@ public class RememberMeAuthenticationFilter extends FormAuthenticationFilter {
 			if (session.getAttribute(AdminConstant.SESSION_KEY_USER_CONTEXT) == null) {
 
 				// 如果是空的才初始化，否则每次都要初始化，项目得慢死
-				// 这边根据前面的前提假设，拿到的是username
-				String loginname = subject.getPrincipal().toString();
+				// 这边根据前面的前提假设，拿到的是id
+				String id = subject.getPrincipal().toString();
 
 				// 在这个方法里面做初始化用户上下文的事情，比如通过查询数据库来设置session值
-		        IUser user = loginService.getUserByLoginName(loginname);
+		        IUser user = loginService.getUserById(id);
 		        if(user != null) {
 		        	loginService.initUserContext(user);
 		        }else{

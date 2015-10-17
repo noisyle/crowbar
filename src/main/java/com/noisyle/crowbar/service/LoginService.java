@@ -17,6 +17,10 @@ public class LoginService {
     @Autowired
     private UserRepository userRepository;
     
+    public User getUserById(String id) {
+    	return userRepository.findById(id);
+    }
+    
 	public User getUserByLoginName(String loginname) {
 		return userRepository.getUserByLoginName(loginname);
 	}
