@@ -10,6 +10,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -27,7 +28,7 @@ import com.noisyle.crowbar.core.util.CookieUtils;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.noisyle.crowbar.controller")
-public class MvcConfig extends WebMvcConfigurationSupport {
+public class WebConfig extends WebMvcConfigurationSupport {
 
 	@Bean
 	public HandlerMapping resourceHandlerMapping() {
@@ -50,6 +51,11 @@ public class MvcConfig extends WebMvcConfigurationSupport {
 		registry.addInterceptor(webHandlerInterceptor());
 	}
 
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+		configurer.enable();
+	}
+
 	@Bean
 	public ViewResolver viewResolver() {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -66,18 +72,20 @@ public class MvcConfig extends WebMvcConfigurationSupport {
 		return messageSource;
 	}
 
-	@Bean(name = "localeResolver")
-	public CookieLocaleResolver cookieLocaleResolver() {
+	@Bean
+	public CookieLocaleResolver localeResolver() {
 		CookieLocaleResolver localeResolver = new CookieLocaleResolver();
 		localeResolver.setCookieMaxAge(CookieUtils.CURRENT_SESSION);
-		localeResolver.setCookieName("Language");
-		localeResolver.setDefaultLocale(new Locale("zh", "CN"));
-		return new CookieLocaleResolver();
+		localeResolver.setCookieName("locale");
+		localeResolver.setDefaultLocale(Locale.SIMPLIFIED_CHINESE);
+		return localeResolver;
 	}
 
 	@Bean
 	public LocaleChangeInterceptor localeChangeInterceptor() {
-		return new LocaleChangeInterceptor();
+		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+		localeChangeInterceptor.setParamName("lang");
+		return localeChangeInterceptor;
 	}
 
 	@Bean
@@ -94,7 +102,7 @@ public class MvcConfig extends WebMvcConfigurationSupport {
 	public WebExceptionResolver webExceptionResolver() {
 		return new WebExceptionResolver();
 	}
-	
+
 	@Override
 	protected void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/error/404").setViewName("error/404");

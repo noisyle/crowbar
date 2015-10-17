@@ -1,11 +1,8 @@
 package com.noisyle.crowbar.core.config;
 
-import java.util.EnumSet;
-
-import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
@@ -15,19 +12,6 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 import com.noisyle.crowbar.core.xss.XssFilter;
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-
-	@Override
-	public void onStartup(ServletContext context) throws ServletException {
-		context.addFilter("shiroFilter", shiroFilterProxy()).addMappingForUrlPatterns(
-				EnumSet.of(DispatcherType.REQUEST), true, "/*");
-		context.addFilter("xssFilter", xssFilter()).addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true,
-				"/*");
-		context.addFilter("characterEncodingFilter", characterEncodingFilter()).addMappingForUrlPatterns(null, true,
-				"/*");
-		context.addFilter("hiddenHttpMethodFilter", hiddenHttpMethodFilter()).addMappingForUrlPatterns(
-				EnumSet.of(DispatcherType.REQUEST), true, "/*");
-		super.onStartup(context);
-	}
 
 	@Override
 	protected String[] getServletMappings() {
@@ -41,18 +25,29 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class[] { MvcConfig.class };
+		return new Class[] { WebConfig.class };
 	}
 
-	private Filter shiroFilterProxy() {
-		DelegatingFilterProxy filter = new DelegatingFilterProxy();
+	@Override
+	protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+		MultipartConfigElement multipartConfig = new MultipartConfigElement("/tmp", 25 * 1024 * 1024,
+				125 * 1024 * 1024, 1 * 1024 * 1024);
+		registration.setMultipartConfig(multipartConfig);
+	}
+
+	@Override
+	protected Filter[] getServletFilters() {
+		return new Filter[] { shiroFilter(), xssFilter(), characterEncodingFilter(), hiddenHttpMethodFilter() };
+	}
+
+	private Filter shiroFilter() {
+		DelegatingFilterProxy filter = new DelegatingFilterProxy("shiroFilter");
 		filter.setTargetFilterLifecycle(true);
 		return filter;
 	}
 
 	private XssFilter xssFilter() {
-		XssFilter filter = new XssFilter();
-		return filter;
+		return new XssFilter();
 	}
 
 	private Filter characterEncodingFilter() {

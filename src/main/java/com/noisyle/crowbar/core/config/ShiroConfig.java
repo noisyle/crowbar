@@ -8,6 +8,7 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 import com.noisyle.crowbar.core.auth.MongoDBUserRealm;
 import com.noisyle.crowbar.core.auth.RememberMeAuthenticationFilter;
@@ -21,10 +22,9 @@ public class ShiroConfig {
 	}
 	
 	@Bean
+	@DependsOn({"userRealm"})
 	public DefaultWebSecurityManager securityManager() {
-		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-		securityManager.setRealm(userRealm());
-		return securityManager;
+		return new DefaultWebSecurityManager(userRealm());
 	}
 	
 	@Bean
@@ -33,6 +33,7 @@ public class ShiroConfig {
 	}
 	
 	@Bean
+	@DependsOn({"securityManager"})
 	public ShiroFilterFactoryBean shiroFilter() {
 		ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
 		shiroFilter.setSecurityManager(securityManager());
