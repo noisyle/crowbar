@@ -10,13 +10,16 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.mongodb.MongoClient;
+import com.noisyle.crowbar.core.task.DaemonTask;
 import com.noisyle.crowbar.core.util.SpringContextHolder;
 
 @Configuration
 @PropertySource("classpath:/spring-context.properties")
 @EnableAspectJAutoProxy(proxyTargetClass = true)
+@EnableScheduling
 @ComponentScan(basePackages = { "com.noisyle.crowbar.repository", "com.noisyle.crowbar.service" })
 public class AppConfig extends AbstractMongoConfiguration {
 
@@ -42,6 +45,11 @@ public class AppConfig extends AbstractMongoConfiguration {
 	public GridFsTemplate gridFsTemplate() throws Exception {
 		return new GridFsTemplate(mongoDbFactory(), mappingMongoConverter());
 	}
+	
+	@Bean
+    public DaemonTask daemonTask() {
+        return new DaemonTask();
+    }
 	
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer propertyPlaceholder() {

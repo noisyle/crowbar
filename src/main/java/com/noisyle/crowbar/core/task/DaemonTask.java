@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.Trigger;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 
@@ -18,22 +19,23 @@ public class DaemonTask {
 
 	private static Logger logger = LoggerFactory.getLogger(DaemonTask.class);
 	private static final Map<String, ThreadPoolTaskScheduler> schedulerHolder = new HashMap<>();
-	
+
 	@Autowired
 	private AutoTaskRepository autoTaskRepository;
-	
+
+	@Scheduled(fixedRate = 10000)
 	public void run() {
 		logger.debug("守护线程启动");
 		Map<String, ITask> tasks = autoTaskRepository.querAutoTaskMap();
-		for(String id : schedulerHolder.keySet()){
-			if(!tasks.keySet().contains(id) || !tasks.get(id).getEnable()){
+		for (String id : schedulerHolder.keySet()) {
+			if (!tasks.keySet().contains(id) || !tasks.get(id).getEnable()) {
 				schedulerHolder.get(id).destroy();
 				schedulerHolder.remove(id);
 			}
 		}
-		for(ITask task : tasks.values()){
-			if(task.getEnable()){
-				if(!schedulerHolder.containsKey(task.getId())){
+		for (ITask task : tasks.values()) {
+			if (task.getEnable()) {
+				if (!schedulerHolder.containsKey(task.getId())) {
 					ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
 					scheduler.initialize();
 					Trigger trigger = new CronTrigger(task.getCron());
@@ -45,9 +47,11 @@ public class DaemonTask {
 					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 						logger.error("自动任务实例化失败,name:{},class:{}", task.getTaskName(), task.getClazz(), e);
 					}
+				} else {
+					// TODO validate task schedule changed
 				}
 			}
 		}
-        logger.debug("守护线程结束");
+		logger.debug("守护线程结束");
 	}
 }
