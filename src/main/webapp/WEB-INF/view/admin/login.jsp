@@ -11,6 +11,7 @@
     <meta name="author" content="">
 
 	<title>XXX管理系统</title>
+	<link rel="shortcut icon" href="${ctx}/static/site/img/favicon.ico" />
 	<link href="${ctx}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="${ctx}/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 	<link href="${ctx}/static/site/css/admin.css" rel="stylesheet">
