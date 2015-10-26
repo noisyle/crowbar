@@ -13,6 +13,7 @@ import org.springframework.scheduling.support.CronTrigger;
 
 import com.noisyle.crowbar.core.base.BaseAutoTask;
 import com.noisyle.crowbar.core.base.ITask;
+import com.noisyle.crowbar.core.util.SpringContextHolder;
 import com.noisyle.crowbar.repository.AutoTaskRepository;
 
 public class DaemonTask {
@@ -40,11 +41,11 @@ public class DaemonTask {
 					scheduler.initialize();
 					Trigger trigger = new CronTrigger(task.getCron());
 					try {
-						BaseAutoTask instance = (BaseAutoTask) Class.forName(task.getClazz()).newInstance();
+						BaseAutoTask instance = (BaseAutoTask) SpringContextHolder.getBean(Class.forName(task.getClazz()));
 						instance.setParameter(task.getParameter());
 						scheduler.schedule(instance, trigger);
 						schedulerHolder.put(task.getId(), scheduler);
-					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+					} catch (ClassNotFoundException e) {
 						logger.error("自动任务实例化失败,name:{},class:{}", task.getTaskName(), task.getClazz(), e);
 					}
 				} else {

@@ -26,7 +26,8 @@ import com.noisyle.crowbar.core.util.SpringContextHolder;
 @PropertySource("classpath:/spring-context.properties")
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableScheduling
-@ComponentScan(basePackages = { "com.noisyle.crowbar.repository", "com.noisyle.crowbar.service" })
+@ComponentScan(basePackages = { "com.noisyle.crowbar.repository", "com.noisyle.crowbar.service",
+		"com.noisyle.crowbar.task" })
 public class AppConfig extends AbstractMongoConfiguration {
 
 	@Autowired
@@ -45,12 +46,12 @@ public class AppConfig extends AbstractMongoConfiguration {
 		String password = env.getProperty("mongo.password");
 		String database = env.getProperty("mongo.databaseName");
 		ServerAddress addr = new ServerAddress(host, port);
-		if(username!=null && password != null){
+		if (username != null && password != null) {
 			List<MongoCredential> credentialsList = new ArrayList<MongoCredential>();
 			MongoCredential credential = MongoCredential.createCredential(username, database, password.toCharArray());
 			credentialsList.add(credential);
 			return new MongoClient(addr, credentialsList);
-		}else{
+		} else {
 			return new MongoClient(addr);
 		}
 	}
