@@ -2,11 +2,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.noisyle</groupId>
-	<artifactId>crowbar</artifactId>
-	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>Crowbar Develop Platform</name>
-	<url>http://maven.apache.org</url>
+	<artifactId>crowbar-parent</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+	<modules>
+		<module>crowbar-core</module>
+		<module>crowbar-backend</module>
+		<module>crowbar-frontend</module>
+	</modules>
 
 	<properties>
 		<spring.framework.version>4.2.0.RELEASE</spring.framework.version>
@@ -129,12 +132,6 @@
 	</dependencies>
 
 	<build>
-		<finalName>crowbar</finalName>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-			</resource>
-		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -145,25 +142,6 @@
 					<target>1.7</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.2.9.v20150224</version>
-				<configuration>
-					<scanIntervalSeconds>10</scanIntervalSeconds>
-					<httpConnector>
-						<port>8081</port>
-					</httpConnector>
-					<webAppConfig>
-						<contextPath>/${project.artifactId}</contextPath>
-					</webAppConfig>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.6</version>
 			</plugin>
 		</plugins>
 	</build>
