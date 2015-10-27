@@ -5,7 +5,7 @@
 .externalToolBuilders/
 
 # IntelliJ IDEA
-crowbar.iml
+*.iml
 .idea/
 
 *.class
