@@ -29,6 +29,18 @@
 	!$.fn.select2 || $.extend($.fn.select2.defaults, $.fn.select2.locales['zh-CN']);
 }(jQuery);
 
++function($) {
+	//修改bootstrapValidator插件默认值
+	!$.fn.bootstrapValidator || $.extend($.fn.bootstrapValidator.DEFAULT_OPTIONS, {
+    	container: 'tooltip',
+    	feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        }
+    });
+}(window.jQuery);
+
 //为日期增加格式化方法
 //使用方法1
 //var now = new Date();

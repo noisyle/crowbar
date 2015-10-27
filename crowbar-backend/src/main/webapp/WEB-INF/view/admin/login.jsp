@@ -14,6 +14,7 @@
 	<link rel="shortcut icon" href="${ctx}/static/site/img/favicon.ico" />
 	<link href="${ctx}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="${ctx}/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="${ctx}/static/bootstrapvalidator/css/bootstrapValidator.min.css" rel="stylesheet">
 	<link href="${ctx}/static/site/css/admin.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -39,13 +40,15 @@ if(window.parent!=window){
                     <h3 class="panel-title"><spring:message code="login.boxTitle" /></h3>
                 </div>
                 <div class="panel-body">
-                    <form role="form">
+                    <form role="form" id="loginForm" action="${ctx}/admin/login">
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="<spring:message code="login.username" />" name="loginname" type="text" value="admin1" autofocus />
+                                <input class="form-control" placeholder="<spring:message code="login.username" />" name="loginname" type="text"
+                                	value="admin1" required data-bv-notempty-message="<spring:message code="login.requireUsername" />" autofocus />
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder="<spring:message code="login.password" />" name="password" type="password" value="123456" />
+                                <input class="form-control" placeholder="<spring:message code="login.password" />" name="password" type="password"
+                                	value="123456" required data-bv-notempty-message="<spring:message code="login.requirePassword" />" />
                             </div>
                             <div class="alert alert-danger" id="msg" style="display:none; padding:5px 15px;"></div>
                             <div class="checkbox">
@@ -54,7 +57,7 @@ if(window.parent!=window){
                                 </label>
                             </div>
                             <!-- Change this to a button or input when using this as a form -->
-                            <a href="#" role="button" class="btn btn-lg btn-primary btn-block"><spring:message code="login.btnLogin" /></a>
+                            <button type="submit" class="btn btn-primary"><spring:message code="login.btnLogin" /></button>
                         </fieldset>
                     </form>
                 </div>
@@ -64,33 +67,24 @@ if(window.parent!=window){
 
 	<script src="${ctx}/static/jquery/jquery-1.11.2.min.js"></script>
 	<script src="${ctx}/static/bootstrap/js/bootstrap.min.js"></script>
+	<script src="${ctx}/static/bootstrapvalidator/js/bootstrapValidator.min.js"></script>
 	<script src="${ctx}/static/utils.js"></script>
 <script>
 $(function(){
-	$('.btn-primary').on('click', login);
-	$('form').on('keyup', 'input', function(e){
-		if(e.which=='13'){
-			login(e);
-		}
-	});
-	
-	function login(e){
-		var data = $('form').serializeObject();
+    $('#loginForm').bootstrapValidator().on('success.form.bv', function(e) {
+        e.preventDefault();
+        var form = e.target;
+		var data = $(form).serializeObject();
 		data.password = $.md5(data.password).toUpperCase();
 		data.rememberMe = $('[name=rememberMe]').prop("checked");
-		$.ajax({
-			url:"${ctx}/admin/login",
-			method:"post",
-			data:data,
-			success:function(r){
-				if(r.status=='SUCCESS'){
-					window.location.href="${ctx}/admin";
-				}else{
-					$("#msg").text(r.message).show();
-				}
+		$.post(form.action, data, function(r){
+			if(r.status=='SUCCESS'){
+				window.location.href="${ctx}/admin";
+			}else{
+				$("#msg").text(r.message).show();
 			}
-		});
-	}
+		}, 'json');
+    });
 });
 </script>
 </body>
