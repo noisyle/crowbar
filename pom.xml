@@ -9,6 +9,7 @@
 		<module>crowbar-core</module>
 		<module>crowbar-backend</module>
 		<module>crowbar-frontend</module>
+		<module>crowbar-search</module>
 	</modules>
 
 	<properties>
