@@ -54,6 +54,8 @@ public class ArticleSearchService implements InitializingBean {
 			// 为字段 sname 建索引
 			doc.add(new TextField("title", article.getTitle(), Field.Store.YES));
 			doc.add(new StringField("id", article.getId(), Field.Store.YES));
+			doc.add(new TextField("subtitle", article.getSubtitle(), Field.Store.YES));
+			doc.add(new StringField("content", article.getContent(), Field.Store.YES));
 			writer.addDocument(doc);
 		}
 		writer.close(); // 关闭读写器

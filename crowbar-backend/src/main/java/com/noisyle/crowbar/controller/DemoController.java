@@ -1,5 +1,7 @@
 package com.noisyle.crowbar.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,50 +28,54 @@ public class DemoController extends BaseController {
 	private MongoTemplate mongoTemplate;
 	@Autowired
 	protected GridFsTemplate gridFsTemplate;
-	
-	@RequestMapping(value="", produces="text/plain;charset=UTF-8")
+
+	@RequestMapping(value = "", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public Object hello(HttpServletRequest request, HttpServletResponse response) {
 		String count = CookieUtils.getCookieValue(request, "count");
-		if(count==null) count = "0";
-		count = String.valueOf(Integer.valueOf(count)+1);
+		if (count == null)
+			count = "0";
+		count = String.valueOf(Integer.valueOf(count) + 1);
 		CookieUtils.setCookieValue(request, response, "count", count, null, "/", CookieUtils.CURRENT_SESSION);
 		logger.debug("=== 第{}次请求由主机 {}:{} 处理请求", count, request.getLocalName(), request.getLocalPort());
 		return "hello world!";
 	}
-	
-	@RequestMapping(value="/init", produces="text/plain;charset=UTF-8")
+
+	@RequestMapping(value = "/init", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public String init() {
 		mongoTemplate.dropCollection(User.class);
 		String pass = CryptoUtils.md5("123456");
-		User user = new User();
-		user.setLoginname("admin1");
-		user.setUsername("管理员1");
-		user.setPassword(pass);
-		user.setPhone("13"+RandomStringUtils.randomNumeric(11));
-		user.setEmail(user.getLoginname()+"@crowbar.com");
-		user.setRole(Role.ADMIN.toString());
-		mongoTemplate.save(user);
-		user = new User();
-		user.setLoginname("admin2");
-		user.setUsername("管理员2");
-		user.setPassword(pass);
-		user.setPhone("13"+RandomStringUtils.randomNumeric(11));
-		user.setEmail(user.getLoginname()+"@crowbar.com");
-		user.setRole(Role.ADMIN.toString());
-		mongoTemplate.save(user);
-		for(int i = 0;i<100;i++){
+		Date publishtime = new Date();
+		User Admin1 = new User();
+		Admin1.setLoginname("admin1");
+		Admin1.setUsername("管理员1");
+		Admin1.setPassword(pass);
+		Admin1.setPhone("13" + RandomStringUtils.randomNumeric(11));
+		Admin1.setEmail(Admin1.getLoginname() + "@crowbar.com");
+		Admin1.setRole(Role.ADMIN.toString());
+		mongoTemplate.save(Admin1);
+		User admin2 = new User();
+		admin2 = new User();
+		admin2.setLoginname("admin2");
+		admin2.setUsername("管理员2");
+		admin2.setPassword(pass);
+		admin2.setPhone("13" + RandomStringUtils.randomNumeric(11));
+		admin2.setEmail(admin2.getLoginname() + "@crowbar.com");
+		admin2.setRole(Role.ADMIN.toString());
+		mongoTemplate.save(admin2);
+		User user;
+		for (int i = 0; i < 100; i++) {
 			user = new User();
-			user.setLoginname("user"+i);
-			user.setUsername("用户"+i);
+			user.setLoginname("user" + i);
+			user.setUsername("用户" + i);
 			user.setPassword(pass);
-			user.setPhone("13"+RandomStringUtils.randomNumeric(11));
-			user.setEmail(user.getLoginname()+"@crowbar.com");
+			user.setPhone("13" + RandomStringUtils.randomNumeric(11));
+			user.setEmail(user.getLoginname() + "@crowbar.com");
 			user.setRole(Role.USER.toString());
 			mongoTemplate.save(user);
 		}
-		
+
 		mongoTemplate.dropCollection(Category.class);
 		Category cat0 = new Category();
 		cat0.setCategoryName("未分类");
@@ -98,11 +104,23 @@ public class DemoController extends BaseController {
 		mongoTemplate.save(cat22);
 
 		mongoTemplate.dropCollection(Article.class);
+		Article article;
+		for (int i = 0; i < 100; i++) {
+			article = new Article();
+			article.setCategory(cat0);
+			article.setTitle("标题"+i);
+			article.setSubtitle("副标题"+i);
+			article.setContent("文章内容"+1);
+			article.setAuthor(Admin1);
+			article.setPublishtime(publishtime);
+			mongoTemplate.save(article);
+		}
+
 		gridFsTemplate.delete(null);
-		
+
 		return "初始化成功";
 	}
-	
+
 	@RequestMapping("/users")
 	@ResponseBody
 	public Object users() {
