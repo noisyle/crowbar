@@ -47,11 +47,9 @@ public class ArticleSearchService implements InitializingBean {
 		List<Article> articles = articleRepository.findAll();
 		directory = new RAMDirectory();
 		analyzer = new StandardAnalyzer();
-		IndexWriterConfig config = new IndexWriterConfig(analyzer);
-		IndexWriter writer = new IndexWriter(directory, config);
+		IndexWriter writer = new IndexWriter(directory, new IndexWriterConfig(analyzer));
 		for (Article article : articles) {
 			Document doc = new Document();
-			// 为字段 sname 建索引
 			doc.add(new TextField("title", article.getTitle(), Field.Store.YES));
 			doc.add(new StringField("id", article.getId(), Field.Store.YES));
 			doc.add(new TextField("subtitle", article.getSubtitle(), Field.Store.YES));
@@ -67,8 +65,7 @@ public class ArticleSearchService implements InitializingBean {
 	public List<Article> searchArticles(String q) {
 		List<Article> result = new LinkedList<Article>();
 		try {
-			DirectoryReader ireader = DirectoryReader.open(directory);
-			IndexSearcher searcher = new IndexSearcher(ireader);
+			IndexSearcher searcher = new IndexSearcher(DirectoryReader.open(directory));
 			QueryParser parser = new QueryParser("title", analyzer);
 			Query query = parser.parse(q);
 

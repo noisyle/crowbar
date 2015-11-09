@@ -26,8 +26,7 @@ import com.noisyle.crowbar.core.util.SpringContextHolder;
 @PropertySource("classpath:/spring-context.properties")
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableScheduling
-@ComponentScan(basePackages = { "com.noisyle.crowbar.repository", "com.noisyle.crowbar.service",
-		"com.noisyle.crowbar.task" })
+@ComponentScan(basePackages = { "com.noisyle.crowbar.repository", "com.noisyle.crowbar.service" })
 public class AppConfig extends AbstractMongoConfiguration {
 
 	@Autowired
