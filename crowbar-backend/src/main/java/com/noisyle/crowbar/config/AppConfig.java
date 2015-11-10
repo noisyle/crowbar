@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
@@ -64,11 +63,6 @@ public class AppConfig extends AbstractMongoConfiguration {
 	@Bean
 	public DaemonTask daemonTask() {
 		return new DaemonTask();
-	}
-
-	@Bean
-	public static PropertySourcesPlaceholderConfigurer propertyPlaceholder() {
-		return new PropertySourcesPlaceholderConfigurer();
 	}
 
 	@Bean
