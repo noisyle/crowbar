@@ -1,6 +1,8 @@
 package com.noisyle.crowbar.core.constant;
 
 public class SystemConstant {
+	public final static String SYSTEM_IDENTIFIER = "_CROWBAR_SYSTEM_IDENTIFIER_";
+	
 	//数据状态
 	public enum Status {
 		INVALID(0, "无效"), VALID(1, "有效");

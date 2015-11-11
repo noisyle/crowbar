@@ -18,6 +18,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
+import com.noisyle.crowbar.core.util.CryptoUtils;
 import com.noisyle.crowbar.core.util.SpringContextHolder;
 
 @Configuration
@@ -40,7 +41,7 @@ public class AppConfig extends AbstractMongoConfiguration {
 		String host = env.getProperty("mongo.host");
 		int port = env.getProperty("mongo.port", Integer.class);
 		String username = env.getProperty("mongo.username");
-		String password = env.getProperty("mongo.password");
+		String password = CryptoUtils.decipher(env.getProperty("mongo.password"));
 		String database = env.getProperty("mongo.databaseName");
 		ServerAddress addr = new ServerAddress(host, port);
 		if (username != null && password != null) {
