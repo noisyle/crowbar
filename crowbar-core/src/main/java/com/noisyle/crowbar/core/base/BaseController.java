@@ -7,13 +7,13 @@ import com.noisyle.crowbar.core.vo.UserContext;
 
 public abstract class BaseController {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
-	protected UserContext userContext = null;
+	
+	private static ThreadLocal<UserContext> userContexts = new ThreadLocal<UserContext>();
 	
 	public UserContext getUserContext() {
-		return userContext;
+		return userContexts.get();
 	}
 	public void setUserContext(UserContext userContext) {
-		this.userContext = userContext;
+		userContexts.set(userContext);
 	}
-	
 }

@@ -104,7 +104,7 @@ public class AdminController extends BaseController {
 				|| "".equals(pass2.trim())) {
 			throw new GeneralException("修改密码失败，参数不正确");
 		}
-		User user = userRepository.findById(userContext.getUser().getId());
+		User user = userRepository.findById(getUserContext().getUser().getId());
 		if (user == null) {
 			throw new GeneralException("修改密码失败，用户不存在");
 		}
@@ -257,7 +257,7 @@ public class AdminController extends BaseController {
 		Category category = categoryRepository.findById(categoryId);
 		article.setCategory(category);
 		if (article.getId() == null) {
-			article.setAuthor((User) userContext.getUser());
+			article.setAuthor((User) getUserContext().getUser());
 			article.setPublishtime(new Date());
 		} else {
 			Article article_db = articleRepository.findById(article.getId());
