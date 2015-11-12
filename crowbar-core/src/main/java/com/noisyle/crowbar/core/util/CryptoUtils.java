@@ -171,4 +171,17 @@ public class CryptoUtils {
 		}
 		return aes(s.substring(1), SystemConstant.SYSTEM_IDENTIFIER, Option.DECRYPT);
 	}
+	
+	public static void main(String[] args) {
+		if (args.length >= 2) {
+			if (args[0].equals("-e")) {
+				System.out.println(cipher(args[1]));
+				return;
+			} else if (args[0].equals("-d")) {
+				System.out.println(decipher(args[1]));
+				return;
+			}
+		}
+		System.out.println("options:\n\t-e:\t加密\n\t-d:\t解密");
+	}
 }

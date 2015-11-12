@@ -19,6 +19,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import com.noisyle.crowbar.core.task.DaemonTask;
+import com.noisyle.crowbar.core.util.CryptoEnvWrapper;
 import com.noisyle.crowbar.core.util.CryptoUtils;
 import com.noisyle.crowbar.core.util.SpringContextHolder;
 
@@ -29,8 +30,12 @@ import com.noisyle.crowbar.core.util.SpringContextHolder;
 @ComponentScan(basePackages = { "com.noisyle.crowbar.repository", "com.noisyle.crowbar.service" })
 public class AppConfig extends AbstractMongoConfiguration {
 
+	private CryptoEnvWrapper env;
+
 	@Autowired
-	Environment env;
+	private void setEnv(Environment env) {
+		this.env = new CryptoEnvWrapper(env);
+	}
 
 	@Override
 	protected String getDatabaseName() {
@@ -40,7 +45,7 @@ public class AppConfig extends AbstractMongoConfiguration {
 	@Override
 	public MongoClient mongo() throws Exception {
 		String host = env.getProperty("mongo.host");
-		int port = env.getProperty("mongo.port", Integer.class);
+		int port = Integer.valueOf(env.getProperty("mongo.port"));
 		String username = env.getProperty("mongo.username");
 		String password = CryptoUtils.decipher(env.getProperty("mongo.password"));
 		String database = env.getProperty("mongo.databaseName");
