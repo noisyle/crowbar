@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
@@ -26,6 +25,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.chenlb.mmseg4j.analysis.MMSegAnalyzer;
 import com.noisyle.crowbar.model.Article;
 import com.noisyle.crowbar.repository.ArticleRepository;
 
@@ -46,7 +46,7 @@ public class ArticleSearchService implements InitializingBean {
 		Date start_time = new Date();
 		List<Article> articles = articleRepository.findAll();
 		directory = new RAMDirectory();
-		analyzer = new StandardAnalyzer();
+		analyzer = new MMSegAnalyzer();
 		IndexWriter writer = new IndexWriter(directory, new IndexWriterConfig(analyzer));
 		for (Article article : articles) {
 			Document doc = new Document();
